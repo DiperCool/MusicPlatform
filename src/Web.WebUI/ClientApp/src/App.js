@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
-import { Container } from 'reactstrap';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import {ApiAuthorizationRoutes} from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';

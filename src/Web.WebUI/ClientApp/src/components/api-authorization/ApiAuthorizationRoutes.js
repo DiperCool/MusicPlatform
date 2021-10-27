@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Route } from 'react-router';
 import { Login } from './Login'
 import { Logout } from './Logout'
