@@ -28,7 +28,7 @@ namespace Web.Infrastructure
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
-                    options.Clients.First().AccessTokenLifetime = 3600;
+                    options.Clients.First().AccessTokenLifetime = 90;
                 });
 
             services.AddAuthentication()

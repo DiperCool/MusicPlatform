@@ -1,14 +1,15 @@
 import React from 'react'
 import { Component } from 'react';
-import authService from './AuthorizeService';
-import { AuthenticationResultStatus } from './AuthorizeService';
+import { AuthenticationResultStatus } from './AuthorizationProvider';
 import { LoginActions, QueryParameterNames, ApplicationPaths } from './ApiAuthorizationConstants';
+import { AuthorizationContext } from './AuthorizationContext';
 
 // The main responsibility of this component is to handle the user's login process.
 // This is the starting point for the login process. Any component that needs to authenticate
 // a user can simply perform a redirect to this component with a returnUrl query parameter and
 // let the component perform the login and return back to the return url.
 export class Login extends Component {
+    static contextType = AuthorizationContext; 
     constructor(props) {
         super(props);
 
@@ -65,7 +66,7 @@ export class Login extends Component {
 
     async login(returnUrl) {
         const state = { returnUrl };
-        const result = await authService.signIn(state);
+        const result = await this.context.signIn(state);
         switch (result.status) {
             case AuthenticationResultStatus.Redirect:
                 break;
@@ -82,7 +83,7 @@ export class Login extends Component {
 
     async processLoginCallback() {
         const url = window.location.href;
-        const result = await authService.completeSignIn(url);
+        const result = await this.context.completeSignIn(url);
         switch (result.status) {
             case AuthenticationResultStatus.Redirect:
                 // There should not be any redirects as the only time completeSignIn finishes

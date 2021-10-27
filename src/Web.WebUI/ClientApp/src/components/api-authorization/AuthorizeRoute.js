@@ -2,9 +2,9 @@ import React from 'react'
 import { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants'
-import authService from './AuthorizeService'
-
+import { AuthorizationContext } from './AuthorizationContext'
 export default class AuthorizeRoute extends Component {
+    static contextType = AuthorizationContext; 
     constructor(props) {
         super(props);
 
@@ -15,12 +15,12 @@ export default class AuthorizeRoute extends Component {
     }
 
     componentDidMount() {
-        this._subscription = authService.subscribe(() => this.authenticationChanged());
+        this._subscription = this.context.subscribe(() => this.authenticationChanged());
         this.populateAuthenticationState();
     }
 
     componentWillUnmount() {
-        authService.unsubscribe(this._subscription);
+        this.context.unsubscribe(this._subscription);
     }
 
     render() {
@@ -45,7 +45,7 @@ export default class AuthorizeRoute extends Component {
     }
 
     async populateAuthenticationState() {
-        const authenticated = await authService.isAuthenticated();
+        const authenticated = await this.context.isAuthenticated();
         this.setState({ ready: true, authenticated });
     }
 

@@ -1,14 +1,15 @@
 import axios from "axios";
-import React, { useRef } from "react";
-import authService from "../api-authorization/AuthorizeService";
+import React, { useContext, useRef } from "react";
+import { AuthorizationContext } from "../api-authorization/AuthorizationContext";
 export const SetTest = ()=>{
     let inputRef = useRef("")
+    let {getAccessToken}= useContext(AuthorizationContext);
     let click =async ()=>{
         await axios.post("https://localhost:5001/api/test/",{
             test : inputRef.current.value
         },{
             headers:{
-                Authorization: "Bearer "+(await authService.getAccessToken())
+                Authorization: "Bearer "+(await getAccessToken())
             }
         })
     }

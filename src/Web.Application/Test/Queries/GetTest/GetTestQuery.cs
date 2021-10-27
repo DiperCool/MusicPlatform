@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Web.Application.Common.Security;
 
 namespace Web.Application.Test.Queries.GetTest
 {
+    [Authorize]
     public class GetTestQuery: IRequest<string>
     {
         

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import {ApiAuthorizationRoutes} from './components/api-authorization/ApiAuthorizationRoutes';
@@ -7,17 +7,17 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import './custom.css'
 import { GetTest } from './components/Test/GetTest';
 import { SetTest } from './components/Test/SetTest';
+import { AuthorizationProvider } from './components/api-authorization/AuthorizationProvider';
+import { LoginMenu } from './components/api-authorization/LoginMenu';
 
-export default class App extends Component {
-  static displayName = App.name;
+export const App = ()=> {
 
-  render () {
     return (
-      <div>
-        <Route path="/getTest" component={GetTest}/>
-        <AuthorizeRoute path="/setTest" component={SetTest}/>
+      <AuthorizationProvider>
+        <LoginMenu/>
+        <AuthorizeRoute path="/getTest" component={GetTest}/>
+        <Route path="/setTest" component={SetTest}/>
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-      </div>
+      </AuthorizationProvider>
     );
-  }
 }
