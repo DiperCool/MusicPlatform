@@ -4,7 +4,7 @@ import { AuthorizationContext } from "../api-authorization/AuthorizationContext"
 
 export const GetTest = ()=>{
     let [test, setTest]= useState("");
-    let {getAccessToken, userManager}= useContext(AuthorizationContext);
+    let {getAccessToken}= useContext(AuthorizationContext)
     useEffect(()=>{
         let loadTest = async()=>{
             let test = await axios.get("https://localhost:5001/api/test/", {
@@ -15,7 +15,7 @@ export const GetTest = ()=>{
             setTest(test.data);
         }
         loadTest();
-    },[getAccessToken, userManager])
+    },[getAccessToken])
 
     return  (
         <div>{test}</div>

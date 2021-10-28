@@ -26,10 +26,9 @@ export const AuthorizationProvider = ({children})=>{
             settings.userStore = new WebStorageStateStore({
                 prefix: ApplicationName
             });
-
-            let userManagerInit = new UserManager(settings);
             settings.automaticSilentRenew = true;
             settings.includeIdTokenInSilentRenew = true;
+            let userManagerInit = new UserManager(settings);
             setUser(await userManagerInit.getUser());
             setUserManager(userManagerInit);
         }
