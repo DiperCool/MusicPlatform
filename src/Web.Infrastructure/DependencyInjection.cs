@@ -4,13 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Web.Application.Common.Interfaces;
 using Web.Infrastructure.Identity;
+using Web.Infrastructure.Persistence;
 using Web.Infrastructure.Services;
-using Web.WebUI.Data;
+
 namespace Web.Infrastructure
 {
     public static class DependencyInjection
@@ -21,19 +23,20 @@ namespace Web.Infrastructure
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            services.AddTransient<IIdentityService, IdentityService>();
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
-                    options.Clients.First().AccessTokenLifetime = 90;
+                    options.Clients.First().AccessTokenLifetime = 600;
                 });
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-            services.AddTransient<ITestService, TestService>();
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<IAccountService, AccountService>();
             return services;
         }
     }
