@@ -90,13 +90,8 @@ namespace Web.WebUI.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                Web.Domain.Entities.Account acc = await _accountService.GetAccountByEmailOrLogin(Input.EmailOrLogin);
-                if(acc==null)
-                {
-                    ModelState.AddModelError("Input.EmailOrLogin", "Account with this email or login doesn't exist");
-                    return Page();
-                }
-                var result = await _signInManager.PasswordSignInAsync(acc.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                Web.Domain.Entities.Account acc = await _accountService.GetAccountByLogin(Input.EmailOrLogin);
+                var result = await _signInManager.PasswordSignInAsync(acc==null? Input.EmailOrLogin: (await _userManager.FindByIdAsync(acc.UserId))?.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

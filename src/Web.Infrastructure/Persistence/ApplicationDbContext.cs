@@ -16,6 +16,7 @@ namespace Web.Infrastructure.Persistence
         public DbSet<Account> Accounts { get;set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Listener> Listeners { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

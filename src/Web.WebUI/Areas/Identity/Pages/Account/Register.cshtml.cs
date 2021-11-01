@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Web.Application.Common.Interfaces;
 using Web.Domain.Entities;
 using Web.Infrastructure.Identity;
 using Web.Infrastructure.Services;
@@ -27,19 +28,22 @@ namespace Web.WebUI.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
+        private readonly IProfileService _profileService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IAccountService accountService)
+            IAccountService accountService,
+            IProfileService profileService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _accountService = accountService;
+            _profileService = profileService;
         }
 
         [BindProperty]
@@ -62,11 +66,11 @@ namespace Web.WebUI.Areas.Identity.Pages.Account
             [StringLength(20,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             public string Login { get; set; }
             [Required]
-            [Display(Name = "FirstName")]
+            [Display(Name = "First Name")]
             [StringLength(20,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             public string FirstName { get; set; }
             [Required]
-            [Display(Name = "LastName")]
+            [Display(Name = "Last Name")]
             [StringLength(20,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             public string LastName { get; set; }
             [Required]
@@ -112,15 +116,21 @@ namespace Web.WebUI.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    Profile profile = new Profile(){UserId = user.Id, Login= Input.Login, LastName= Input.LastName, FirstName=Input.FirstName};
                     if(Input.TypeAccount=="Artist")
                     {
-                        await _accountService.CreateAccount(new Artist(){ UserId= user.Id,Login= Input.Login, LastName= Input.LastName, FirstName=Input.FirstName, Email= Input.Email });
+                        Artist acc= (Artist) await _accountService.CreateAccount(new Artist(){ UserId= user.Id });
                         await _userManager.AddToRoleAsync(user, "Artist");
+                        profile.Account = acc; 
+                        await _profileService.CreateProfile(profile);
+
                     }
                     else if(Input.TypeAccount=="Listener")
                     {
-                        await _accountService.CreateAccount(new Listener(){ UserId= user.Id, Login= Input.Login, LastName= Input.LastName, FirstName=Input.FirstName, Email=Input.Email });
+                        Listener acc= (Listener) await _accountService.CreateAccount(new Listener(){ UserId= user.Id});
                         await _userManager.AddToRoleAsync(user, "Listener");
+                        profile.Account = acc; 
+                        await _profileService.CreateProfile(profile);
                     }
                     _logger.LogInformation("User created a new account with password.");
 

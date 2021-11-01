@@ -37,6 +37,7 @@ namespace Web.Infrastructure
                 .AddIdentityServerJwt();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IProfileService, ProfileService>();
             return services;
         }
     }

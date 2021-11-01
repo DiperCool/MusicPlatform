@@ -13,11 +13,11 @@ using Web.Infrastructure;
 using Web.WebUI.Filters;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using Web.Application.Common.Interfaces;
 using Web.WebUI.Services;
 using Web.Application;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using IdentityServer4.Services;
 
 namespace Web.WebUI
 {
@@ -36,7 +36,8 @@ namespace Web.WebUI
             services.AddInfrastructure(Configuration);
             services.AddApplication();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<Web.Application.Common.Interfaces.ICurrentUserService, CurrentUserService>();
+            services.AddTransient<IProfileService, IdentityProfileService>();
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
                     .AddFluentValidation(x => x.AutomaticValidationEnabled = false);

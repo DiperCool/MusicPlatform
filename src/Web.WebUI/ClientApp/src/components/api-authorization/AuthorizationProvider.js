@@ -2,7 +2,7 @@ import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
 import React, { useEffect, useState } from "react";
 import { AuthorizationContext } from './AuthorizationContext';
-
+import axios from "axios";
 export const AuthorizationProvider = ({children})=>{
     let [_callbacks, setCallbacks]= useState([]);
     let[_nextSubscriptionId, setNextSubscriptionId] = useState(0);
@@ -29,7 +29,26 @@ export const AuthorizationProvider = ({children})=>{
             settings.automaticSilentRenew = true;
             settings.includeIdTokenInSilentRenew = true;
             let userManagerInit = new UserManager(settings);
-            setUser(await userManagerInit.getUser());
+            let userInit = await userManagerInit.getUser();
+            if(!!userInit && !window.location.href.includes("authentication"))
+            {
+                try {
+                    let response = await axios.post("https://localhost:5001/connect/userinfo",{
+                    
+                    },{
+                        headers:{
+                            Authorization: "Bearer "+userInit.access_token
+                        }
+                    });
+                    userInit.profile = {
+                        ...userInit.profile, ...response.data
+                    }
+                    userManagerInit.storeUser(userInit);
+                } catch(e) {
+
+                }
+            }
+            setUser(userInit);
             setUserManager(userManagerInit);
         }
         fetchUserManager();

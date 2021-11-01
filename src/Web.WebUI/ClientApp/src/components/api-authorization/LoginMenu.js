@@ -28,7 +28,7 @@ export class LoginMenu extends Component {
         const [isAuthenticated, user] = await Promise.all([this.context.isAuthenticated(), this.context.getUser()])
         this.setState({
             isAuthenticated,
-            userName: user && user.name
+            userName: user && user?.nickname
         });
     }
 

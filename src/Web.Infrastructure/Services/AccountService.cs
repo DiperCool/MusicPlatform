@@ -12,7 +12,7 @@ namespace Web.Infrastructure.Services
         {
             _context=context;
         }
-        public async Task<int> CreateAccount(Account account)
+        public async Task<Account> CreateAccount(Account account)
         {
             if(account is Artist)
             {
@@ -27,19 +27,18 @@ namespace Web.Infrastructure.Services
                 _context.Accounts.Add(account);
             }
             await _context.SaveChangesAsync();
-            return account.Id;
+            return account;
 
         }
 
-        public async Task<Account> GetAccountByEmailOrLogin(string loginOrEmail)
+        public async Task<Account> GetAccountByLogin(string login)
         {
-            return await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x=>x.Login== loginOrEmail || x.Email==loginOrEmail);
+            return await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x=>x.Profile.Login== login);
         }
 
         public async Task<bool> IsLoginExist(string login)
         {
-            return await _context.Accounts.AsNoTracking().AnyAsync(x=>x.Login==login);
+            return await _context.Accounts.AsNoTracking().AnyAsync(x=>x.Profile.Login==login);
         }
-
     }
 }

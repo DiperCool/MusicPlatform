@@ -8,8 +8,8 @@ namespace Web.Infrastructure.Services
 {
     public interface IAccountService
     {
-        Task<int> CreateAccount(Account account);
+        Task<Account> CreateAccount(Account account);
         Task<bool> IsLoginExist(string login);
-        Task<Account> GetAccountByEmailOrLogin(string loginOrEmail);
+        Task<Account> GetAccountByLogin(string login);
     }
 }
