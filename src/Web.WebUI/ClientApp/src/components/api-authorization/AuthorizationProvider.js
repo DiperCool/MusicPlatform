@@ -54,7 +54,8 @@ export const AuthorizationProvider = ({children})=>{
         fetchUserManager();
     },[]);
     useEffect(()=>{
-        if(userManager===undefined) return;
+        if(!userManager|| !_user) return;
+
         let addAccessTokenExpired = _ => {
             console.log("expired");
             signIn({});

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
@@ -32,6 +33,9 @@ namespace Web.WebUI.Services
             Profile profile = await _profileService.GetProfileByUserId(sub);
             List<Claim>  claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+            var roles = await _userManager.GetRolesAsync(user);
+            
+            claims.AddRange(roles.Select(role => new Claim(JwtClaimTypes.Role, role)));
             claims.Add(new Claim("nickname", profile.Login));
             claims.Add(new Claim("given_name", profile.FirstName));
             claims.Add(new Claim("family_name", profile.LastName));

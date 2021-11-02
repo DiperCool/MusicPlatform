@@ -95,7 +95,7 @@ namespace Web.WebUI.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user, profile);
                 return Page();
             }
-            if(await _accountService.IsLoginExist(Input.Login))
+            if(Input.Login!= profile.Login &&await _accountService.IsLoginExist(Input.Login))
             {
                 ModelState.AddModelError("Input.Login", "This login already exist");
                 await LoadAsync(user, profile);
