@@ -1,0 +1,5 @@
+.NavBar{
+    background: silver;
+    grid-area: nav;
+    width: 200px;
+}

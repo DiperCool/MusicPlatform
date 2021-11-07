@@ -1,4 +1,4 @@
-export const ApplicationName = 'Web.WebUI';
+export const ApplicationName = 'Music-Platform';
 
 export const QueryParameterNames = {
   ReturnUrl: 'returnUrl',

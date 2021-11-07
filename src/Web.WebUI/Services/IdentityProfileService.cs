@@ -36,9 +36,9 @@ namespace Web.WebUI.Services
             var roles = await _userManager.GetRolesAsync(user);
             
             claims.AddRange(roles.Select(role => new Claim(JwtClaimTypes.Role, role)));
-            claims.Add(new Claim("nickname", profile.Login));
-            claims.Add(new Claim("given_name", profile.FirstName));
-            claims.Add(new Claim("family_name", profile.LastName));
+            claims.Add(new Claim(JwtClaimTypes.NickName, profile.Login));
+            claims.Add(new Claim(JwtClaimTypes.GivenName, profile.FirstName));
+            claims.Add(new Claim(JwtClaimTypes.FamilyName, profile.LastName));
 
             context.IssuedClaims = claims;
         }

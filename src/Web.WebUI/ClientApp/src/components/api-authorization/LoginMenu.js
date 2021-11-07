@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { NavItem, NavLink } from 'reactstrap';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
+import {  Menu,  MenuList,  MenuButton, MenuLink,} from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 import { AuthorizationContext } from './AuthorizationContext';
-
+import "./css/loginMenu.css"
 export class LoginMenu extends Component {
     static contextType = AuthorizationContext;
     constructor(props) {
@@ -46,25 +47,37 @@ export class LoginMenu extends Component {
     }
 
     authenticatedView(userName, profilePath, logoutPath) {
-        return (<Fragment>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={profilePath}>Hello {userName}</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={logoutPath}>Logout</NavLink>
-            </NavItem>
-        </Fragment>);
+        return (
+        <div className="loginMenu">
+            <Menu>      
+                <MenuButton>{userName} <span aria-hidden>▾</span></MenuButton>      
+                <MenuList className="slide-down">        
+                     <MenuLink as={Link} to={profilePath}>Profile</MenuLink>        
+                     <MenuLink as={Link} to={logoutPath}>Logout</MenuLink>                        
+                </MenuList>    
+            </Menu>
+        </div>);
 
     }
 
     anonymousView(registerPath, loginPath) {
-        return (<Fragment>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={registerPath}>Register</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={loginPath}>Login</NavLink>
-            </NavItem>
-        </Fragment>);
+        return (
+            <div className="loginMenu">
+                <div>
+                    <a className="disabled-styles-link" href={registerPath}>
+                        <button className="base-button register-button">
+                            Register
+                        </button>
+                    </a>
+                </div>
+                <div>
+                    <a className="disabled-styles-link" href={loginPath}>
+                        <button className="base-button login-button">
+                            Login
+                        </button>
+                    </a>
+                </div>
+            </div>
+        );
     }
 }
