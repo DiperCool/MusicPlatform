@@ -9,7 +9,10 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+*.png
+*.jpg
+*.mp3
+*.mp4
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

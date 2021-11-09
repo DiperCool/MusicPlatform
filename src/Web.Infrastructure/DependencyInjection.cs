@@ -23,10 +23,11 @@ namespace Web.Infrastructure
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
@@ -38,6 +39,7 @@ namespace Web.Infrastructure
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IFileService, FileService>();
             return services;
         }
     }

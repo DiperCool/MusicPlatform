@@ -38,7 +38,7 @@ namespace Web.WebUI
             services.AddInfrastructure(Configuration);
             services.AddApplication();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<Web.Application.Common.Interfaces.ICurrentUserService, CurrentUserService>();
+            services.AddTransient<Web.Application.Common.Interfaces.ICurrentUserService, CurrentUserService>();
             services.AddTransient<IProfileService, IdentityProfileService>();
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())

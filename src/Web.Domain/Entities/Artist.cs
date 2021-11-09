@@ -7,6 +7,6 @@ namespace Web.Domain.Entities
 {
     public class Artist : Account
     {
-        
+        public List<Album> Albums { get; set; } = new List<Album>();
     }
 }
