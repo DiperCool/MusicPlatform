@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Web.Application.Albums.Commands.CreateAlbum;
+using Web.Application.Albums.Commands.DeleteAlbum;
 using Web.Application.Albums.Commands.UpdatePicturesAlbum;
 using Web.Application.Common.Models;
 using Web.WebUI.ExtensionsMethods;
@@ -29,9 +30,16 @@ namespace Web.WebUI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePicturesAlbum([FromForm] UpdatePictureAlbumModel model )
+        public async Task<IActionResult> UpdateAlbum([FromForm] UpdateAlbumModel model )
         {
             UpdateAlbumCommand command = new UpdateAlbumCommand(){AlbumId = model.AlbumId, File = await model.File.ConvertToFileModelAsync(), Title = model.Titile};
+            return Ok(await Mediator.Send(command));
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAlbum([FromBody] DeleteAlbumCommand command)
+        {
             return Ok(await Mediator.Send(command));
         }
 

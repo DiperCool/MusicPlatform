@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Albums.Commands.UpdatePicturesAlbum
+namespace Web.Application.Albums.Commands.DeleteAlbum
 {
-    public class UpdatePicturesAlbumCommandValidator: AbstractValidator<UpdateAlbumCommand>
+    public class DeleteAlbumCommandValidator : AbstractValidator<DeleteAlbumCommand>
     {
-        public UpdatePicturesAlbumCommandValidator()
+        public DeleteAlbumCommandValidator()
         {
             RuleFor(x=>x.AlbumId)
                 .NotEmpty();
