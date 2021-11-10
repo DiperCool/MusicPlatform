@@ -10,6 +10,7 @@ namespace Web.Application.Common.Interfaces
     public interface IFileService
     {
         PathToFile SaveFile(FileModel model);
+        void DeleteFile(string path);
         string GetWebRootPath();
     }
 }

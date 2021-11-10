@@ -19,6 +19,11 @@ namespace Web.Infrastructure.Services
             _host = host;
         }
 
+        public void DeleteFile(string path)
+        {
+            File.Delete(path);
+        }
+
         public string GetWebRootPath() => _host.WebRootPath;
 
         public PathToFile SaveFile(FileModel model)
