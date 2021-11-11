@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Web.Application.Albums.Commands.CreateAlbum;
 using Web.Application.Albums.Commands.DeleteAlbum;
 using Web.Application.Albums.Commands.UpdatePicturesAlbum;
+using Web.Application.Albums.Queries.GetAlbums;
 using Web.Application.Common.Models;
 using Web.WebUI.ExtensionsMethods;
 using Web.WebUI.Models;
@@ -41,6 +42,12 @@ namespace Web.WebUI.Controllers
         public async Task<IActionResult> DeleteAlbum([FromBody] DeleteAlbumCommand command)
         {
             return Ok(await Mediator.Send(command));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAlbums([FromQuery] GetAlbumsQuery query)
+        {
+            return Ok(await Mediator.Send(query));
         }
 
 
