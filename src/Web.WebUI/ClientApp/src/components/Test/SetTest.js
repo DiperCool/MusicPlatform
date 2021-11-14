@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useContext, useRef } from "react";
 import { AuthorizationContext } from "../api-authorization/AuthorizationContext";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 export const SetTest = ()=>{
     let inputRef = useRef("")
     let {getAccessToken}= useContext(AuthorizationContext);
@@ -14,59 +16,11 @@ export const SetTest = ()=>{
         })
     }
     return (
-        <div>
-            <input ref={inputRef} type="text"/>
-        <button onClick={click}>Click!</button>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        </div>
+        <AudioPlayer
+    autoPlay
+    src="https://localhost:5001/api/playsong?songId=1"
+    onPlay={e => console.log("onPlay")}
+    // other props here
+  />
     )
 }
