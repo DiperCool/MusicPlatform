@@ -34,7 +34,7 @@ namespace Web.WebUI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAlbum([FromForm] UpdateAlbumModel model )
         {
-            UpdateAlbumCommand command = new UpdateAlbumCommand(){AlbumId = model.AlbumId, File = await model.File.ConvertToFileModelAsync(), Title = model.Titile};
+            UpdateAlbumCommand command = new UpdateAlbumCommand(){AlbumId = model.AlbumId, File = await model.File.ConvertToFileModelAsync(), Title = model.Title};
             return Ok(await Mediator.Send(command));
         }
 

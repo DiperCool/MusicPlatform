@@ -13,13 +13,13 @@ using Web.Domain.Entities;
 
 namespace Web.Application.Songs.Commands.CreateSong
 {
+    [Authorize(Roles="Artist")]
     public class CreateSongCommand: IRequest<int>
     {
         public int AlbumId { get; set; }
         public string Title { get; set; }
         public FileModel File { get; set; }
     }
-    [Authorize(Roles="Artist")]
     public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand, int>
     {
         IApplicationDbContext _context;

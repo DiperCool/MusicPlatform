@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Web.Application.Common.Models;
 
 namespace Web.WebUI.Models
 {
-    public class UpdateAlbumModel
+    public class UpdateSongModel
     {
-        public int AlbumId{ get ;set; }
+        public int SongId{ get ;set; }
         public string Title { get; set;}
         public IFormFile File { get; set; }
     }
