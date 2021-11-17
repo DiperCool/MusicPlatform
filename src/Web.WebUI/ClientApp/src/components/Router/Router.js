@@ -3,13 +3,12 @@ import { Route } from 'react-router';
 import AuthorizeRoute from '../api-authorization/AuthorizeRoute';
 import {ApiAuthorizationRoutes} from '../api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from '../api-authorization/ApiAuthorizationConstants';
-import { GetTest } from '../Test/GetTest';
-import { SetTest } from '../Test/SetTest';
+import "./Router.css";
+import { AlbumCreate } from "../Album/Create/AlbumCreate";
 export const Router = ()=>{
     return (
-        <main style={{gridArea: "main"  , overflow: "auto"}}>
-            <AuthorizeRoute path="/getTest" component={GetTest}/>
-            <Route path="/setTest" component={SetTest}/>
+        <main className="main" style={{gridArea: "main"  , overflow: "auto"}}>
+            <AuthorizeRoute path="/artist/album/create" component={AlbumCreate}/>
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         </main>
     )

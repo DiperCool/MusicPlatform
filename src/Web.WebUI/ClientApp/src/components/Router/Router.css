@@ -1,0 +1,9 @@
+:root{
+    --main-color: rgb(18, 18, 18);
+    --main-primary-color: #fff;
+}
+.main{
+    background-color: var(--main-color);
+    color: var(--main-primary-color);
+    padding: 5px;
+}

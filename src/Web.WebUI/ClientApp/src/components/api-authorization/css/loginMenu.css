@@ -5,48 +5,6 @@
     padding: 10px;
 }
 
-.base-button{
-    border: 2px solid transparent;
-    border-radius: 500px;
-    color: var(--header-primary-color);
-    cursor: pointer;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.76px;
-    line-height: 18px;
-    padding: 8px 34px;
-    text-align: center;
-    text-transform: uppercase;
-    -webkit-transition: all 33ms cubic-bezier(.3,0,0,1);
-    transition: all 33ms cubic-bezier(.3,0,0,1);
-    white-space: nowrap;
-    will-change: transform;
-}
-
-.register-button{
-    background-color: transparent;
-    color: var(--header-primary-color);
-    border: 1px solid var(--header-primary-color);
-    transition: all 0.3s ease-out;
-}
-.register-button:hover{
-    background-color: var(--header-primary-color);
-    color: var(--header-color);
-}
-
-.login-button{
-    background-color: transparent;
-    color: var(--header-primary-color);
-    border: 1px solid var(--header-primary-color);
-    transition: all 0.3s ease-out;
-}
-
-.login-button:hover{
-    background-color: var(--header-primary-color);
-    color: var(--header-color);
-}
-
 .authenticated-button{
     background-color: var(--header-color);
     border:  1px solid var(--header-primary-color);

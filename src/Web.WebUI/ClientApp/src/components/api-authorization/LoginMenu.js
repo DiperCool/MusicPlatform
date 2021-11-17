@@ -5,6 +5,7 @@ import {  Menu,  MenuList,  MenuButton, MenuLink,} from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 import { AuthorizationContext } from './AuthorizationContext';
 import "./css/loginMenu.css"
+import { Button } from '../Components/Button/Button';
 export class LoginMenu extends Component {
     static contextType = AuthorizationContext;
     constructor(props) {
@@ -65,16 +66,16 @@ export class LoginMenu extends Component {
             <div className="loginMenu">
                 <div>
                     <a className="disabled-styles-link" href={registerPath}>
-                        <button className="base-button register-button">
+                        <Button>
                             Register
-                        </button>
+                        </Button>
                     </a>
                 </div>
                 <div>
                     <a className="disabled-styles-link" href={loginPath}>
-                        <button className="base-button login-button">
+                        <Button >
                             Login
-                        </button>
+                        </Button>
                     </a>
                 </div>
             </div>

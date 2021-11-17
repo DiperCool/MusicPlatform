@@ -1,0 +1,14 @@
+:root{
+    --text-field-primary-color:rgb(18, 18, 18);
+    --text-field-color:#fff;
+}
+
+
+.text-field{
+    color: red;
+    border: 0;
+    color: var(--text-field-primary-color);
+    padding: 6px 15px;
+    border-radius: 500px;
+    height: 40px;
+}

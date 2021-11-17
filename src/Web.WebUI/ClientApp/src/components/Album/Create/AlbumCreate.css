@@ -1,0 +1,12 @@
+.album-create-button{
+    display: flex;
+    align-items: center;
+}
+
+.album-create-content{
+    display: block;
+}
+
+.album-create-content > div{
+    margin-top: 10px;
+}

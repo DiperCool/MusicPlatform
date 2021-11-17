@@ -30,6 +30,7 @@ export const AuthorizationProvider = ({children})=>{
             settings.includeIdTokenInSilentRenew = true;
             let userManagerInit = new UserManager(settings);
             let userInit = await userManagerInit.getUser();
+            
             if(!!userInit && !window.location.href.includes("authentication"))
             {
                 try {

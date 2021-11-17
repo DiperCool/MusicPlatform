@@ -1,0 +1,31 @@
+:root{
+    --button-primary-color:rgb(18, 18, 18);
+    --button-color:#fff;
+}
+
+.base-button{
+    border: 2px solid transparent;
+    border-radius: 500px;
+    color: var(--button-color);
+    cursor: pointer;
+    display: inline-block;
+    background-color: var(--button-primary-color);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.76px;
+    line-height: 18px;
+    padding: 8px 34px;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-transition: all 33ms cubic-bezier(.3,0,0,1);
+    transition: all 33ms cubic-bezier(.3,0,0,1);
+    white-space: nowrap;
+    will-change: transform;
+    border: 1px solid var(--header-primary-color);
+    transition: all 0.3s ease-out;
+}
+
+.base-button:hover{
+    background-color: var(--header-primary-color);
+    color: var(--header-color);
+}

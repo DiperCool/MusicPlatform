@@ -1,5 +1,20 @@
+:root{
+    --navbar-color: rgb(18, 18, 18);
+    --navbar-primary-color: #fff;
+}
+
+
 .NavBar{
-    background: silver;
+    background: var(--navbar-color);
     grid-area: nav;
+    border-right: 1px var(--navbar-primary-color) solid;
     width: 200px;
 }
+
+.name-project{
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    font-weight: 700;
+}
+

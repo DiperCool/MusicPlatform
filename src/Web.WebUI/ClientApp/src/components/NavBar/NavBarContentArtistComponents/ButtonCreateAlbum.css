@@ -1,0 +1,16 @@
+.button-create-album{
+    color: var(--navbar-primary-color);
+    display: flex;
+    align-items: center;
+    color: white
+}
+
+.text-create-album{
+    font-size: 17px;
+}
+.button-create-album > div{
+    margin: 2px;
+}
+.button-create-album:hover{
+    color: silver;
+}
