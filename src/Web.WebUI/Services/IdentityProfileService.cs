@@ -39,6 +39,7 @@ namespace Web.WebUI.Services
             claims.Add(new Claim(JwtClaimTypes.NickName, profile.Login));
             claims.Add(new Claim(JwtClaimTypes.GivenName, profile.FirstName));
             claims.Add(new Claim(JwtClaimTypes.FamilyName, profile.LastName));
+            claims.Add(new Claim("AccountId", profile.AccountId.ToString()));
 
             context.IssuedClaims = claims;
         }

@@ -1,0 +1,11 @@
+.album-item{
+    color: #fff;
+}
+
+.album-item-link{
+    color: #fff;
+}
+
+.album-item-link:hover{
+    color: silver
+}

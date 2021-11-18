@@ -1,0 +1,27 @@
+.title-nav-albums{
+    color: silver;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.content-nav-albums{
+    width: 100%;
+}
+.content-nav-albums>div{
+    margin-bottom: 3px;
+    margin-left: 5px;
+}
+.load-more-button-wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 0!important;
+    padding: 0!important;
+}
+.load-more-button{
+    color: #fff;
+    cursor: pointer;
+}
+
+.load-more-button:hover{
+    color: silver;
+}

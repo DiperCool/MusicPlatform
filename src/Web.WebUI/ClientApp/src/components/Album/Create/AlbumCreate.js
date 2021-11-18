@@ -8,6 +8,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from "react-router-dom";
 import { AuthorizationContext } from "../../api-authorization/AuthorizationContext";
+import { emitCustomEvent } from 'react-custom-events';
 export const AlbumCreate = () => {
     let { getAccessToken}= useContext(AuthorizationContext);
     let history = useHistory();
@@ -32,7 +33,10 @@ export const AlbumCreate = () => {
                     },
                     body:fd
                 })
-                if(response.ok) history.push("/");
+                if(response.ok){
+                    history.push("/");
+                    emitCustomEvent("addAlbum", await response.json());
+                }
 
             }}
         >

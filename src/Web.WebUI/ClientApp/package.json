@@ -11,6 +11,7 @@
     "merge": "^1.2.1",
     "oidc-client": "^1.9.0",
     "react": "^16.0.0",
+    "react-custom-events": "^1.0.5",
     "react-dom": "^16.0.0",
     "react-h5-audio-player": "^3.7.4",
     "react-icons": "^4.3.1",
