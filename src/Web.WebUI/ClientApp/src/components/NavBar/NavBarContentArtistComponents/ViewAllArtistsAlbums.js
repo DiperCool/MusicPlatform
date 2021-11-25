@@ -38,8 +38,8 @@ export const ViewAllArtistsAlbums = ()=>{
     },[]);
 
     return(
-        <div class="content-nav-albums">
-            <div class="title-nav-albums">
+        <div className="content-nav-albums">
+            <div className="title-nav-albums">
                 Your Albums
             </div>
             <div>

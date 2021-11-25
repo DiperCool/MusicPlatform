@@ -10,7 +10,8 @@ export default class AuthorizeRoute extends Component {
 
         this.state = {
             ready: false,
-            authenticated: false
+            authenticated: false,
+            doesntHaveRole: false
         };
     }
 
@@ -32,11 +33,14 @@ export default class AuthorizeRoute extends Component {
         if (!ready) {
             return <div></div>;
         } else {
-            const { component: Component, ...rest } = this.props;
+            const { component: Component,...rest } = this.props;
+
             return <Route {...rest}
                 render={(props) => {
-                    if (authenticated) {
+                    if (authenticated && !this.state.doesntHaveRole) {
                         return <Component {...props} />
+                    } else if(this.state.doesntHaveRole){
+                        return <Redirect to={"/"}/>
                     } else {
                         return <Redirect to={redirectUrl} />
                     }
@@ -45,8 +49,20 @@ export default class AuthorizeRoute extends Component {
     }
 
     async populateAuthenticationState() {
-        const authenticated = await this.context.isAuthenticated();
+        let authenticated= await this.context.isAuthenticated();
+        if(!authenticated){
+            this.setState({ ready: true, authenticated })
+            return;
+        }
+        let user = await this.context.getUser();
+        if(this.props.roles){
+            authenticated=this.props.roles.indexOf(user.role)!==-1;
+            this.setState({ ready: true, authenticated, doesntHaveRole: !authenticated });
+            return;
+        }
         this.setState({ ready: true, authenticated });
+        return;
+
     }
 
     async authenticationChanged() {
