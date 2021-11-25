@@ -17,9 +17,9 @@ using Web.WebUI.Services;
 using Web.Application;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using IdentityServer4.Services;
 using Microsoft.OpenApi.Models;
 using System;
+using Duende.IdentityServer.Services;
 
 namespace Web.WebUI
 {
