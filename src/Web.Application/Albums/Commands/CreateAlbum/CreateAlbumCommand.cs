@@ -40,7 +40,7 @@ namespace Web.Application.Albums.Commands.CreateAlbum
                 Album album = new Album { Title = request.Title };
                 Artist artist = await _currentUser.GetArtistByUserId();
                 album.Artist = artist;
-                album.CreatedAt= DateTime.Now;
+                album.CreatedAt=  DateTime.Now.ToUniversalTime();
                 album.Picture=_fileService.SaveFile(request.File);
                 _context.Albums.Add(album);
                 await _context.SaveChangesAsync(cancellationToken);

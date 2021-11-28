@@ -12,5 +12,6 @@ namespace Web.Domain.Entities
         public int AlbumId { get; set; }
         public Album Album { get; set; }
         public PathToFile File { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

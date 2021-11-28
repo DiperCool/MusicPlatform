@@ -50,10 +50,10 @@ namespace Web.WebUI.Controllers
         {
             return Ok(await Mediator.Send(query));
         }
-        [HttpGet("albumId")]
-        public async Task<IActionResult> GetAlbum([FromQuery] GetAlbumQuery query)
+        [HttpGet("{AlbumId}")]
+        public async Task<IActionResult> GetAlbum(int AlbumId)
         {
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetAlbumQuery{ AlbumId = AlbumId}));
         }
 
     }

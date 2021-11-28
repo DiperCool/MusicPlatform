@@ -1,0 +1,29 @@
+.settings-album{
+
+}
+
+.settings-album-picture{
+    width: 200px;
+    height: 200px;
+}
+
+.settings-album-information{
+    display: flex;
+}
+.settings-album-information > div{
+    margin-left: 5px;
+}
+.settings-album-title{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.settings-album-title-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.settings-album-buttons>button{
+    margin-left: 5px;
+}

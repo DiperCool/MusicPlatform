@@ -39,7 +39,7 @@ namespace Web.Application.Songs.Commands.CreateSong
             {
                 throw new ForbiddenAccessException();
             }
-            Song song = new Song{ Title = request.Title, AlbumId = request.AlbumId, File = _fileService.SaveFile(request.File) };
+            Song song = new Song{ Title = request.Title, AlbumId = request.AlbumId, File = _fileService.SaveFile(request.File), CreatedAt =  DateTime.Now.ToUniversalTime() };
             _context.Songs.Add(song);
             await _context.SaveChangesAsync(cancellationToken);
             return song.Id;
