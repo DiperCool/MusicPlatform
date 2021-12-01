@@ -12,8 +12,6 @@ namespace Web.Application.Songs.Queries.GetSongs
         {
             RuleFor(x=>x.AlbumId)
                 .NotEmpty();
-            RuleFor(x=>x.PageNumber)
-                .GreaterThanOrEqualTo(1);
             RuleFor(x=>x.PageSize)
                 .GreaterThanOrEqualTo(1);
         }

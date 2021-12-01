@@ -1,3 +1,5 @@
+using Web.Domain.Interfaces;
+
 namespace Web.Domain.Entities
 {
     public class Account

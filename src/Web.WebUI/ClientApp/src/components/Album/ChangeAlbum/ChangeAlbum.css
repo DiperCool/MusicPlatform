@@ -1,0 +1,16 @@
+.album-change-button{
+    display: flex;
+    align-items: center;
+}
+
+.album-change-content{
+    display: block;
+}
+
+.album-change-content > div{
+    margin-top: 10px;
+}
+
+.text-field-change-album{
+    width: 325px
+}

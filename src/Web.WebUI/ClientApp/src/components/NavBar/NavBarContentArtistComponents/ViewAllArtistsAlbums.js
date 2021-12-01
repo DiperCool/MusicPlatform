@@ -8,13 +8,13 @@ export const ViewAllArtistsAlbums = ()=>{
     let [albums, setAlbums]= useState([]);
     let [pagination, setPagination]= useState({
         hasNextPage:false,
-        pageNumber:1,
+        id:0,
         pageSize:1
     });
     let {getUser, getAccessToken} = useContext(AuthorizationContext);
-    let loadAlbums = async(pageNumber=1, pageSize=1)=>{
+    let loadAlbums = async(id=0, pageSize=1)=>{
         let user = await getUser();
-        let response = await fetch(`api/album?artistId=${user.AccountId}&pageSize=${pageSize}&pageNumber=${pageNumber}`,{
+        let response = await fetch(`api/album?artistId=${user.AccountId}&pageSize=${pageSize}&albumId=${id}`,{
             method: "GET",
             headers:{
                 Authorization: "Bearer " + await getAccessToken()
@@ -27,9 +27,18 @@ export const ViewAllArtistsAlbums = ()=>{
     };
     useCustomEventListener("addAlbum",(data)=>{
         setAlbums([...albums, data]);
+    }); 
+    useCustomEventListener("changeAlbum",(data)=>{
+        let albumsCopy = [...albums];
+        albumsCopy.forEach(album=>{
+            if(album.id===Number(data.albumId)){
+                album.title = data.title
+            }
+        });
+        setAlbums(albumsCopy);
     })
     let clickLoadMoreButton = async()=>{
-        await loadAlbums(pagination.pageNumber+1, pagination.pageSize)
+        await loadAlbums(pagination.id, pagination.pageSize)
     }
     useEffect(()=>{
         
@@ -44,8 +53,8 @@ export const ViewAllArtistsAlbums = ()=>{
             </div>
             <div>
                 {albums.map(el=><AlbumItem key={el.id} album={el}/>)}
-            </div>
-            {pagination.hasNextPage? 
+            </div> 
+            {pagination.hasNextPage?
             <div  className="load-more-button-wrapper">
                 <CgArrowDownO onClick={clickLoadMoreButton} size={30}  className="load-more-button "/>
             </div>:null}

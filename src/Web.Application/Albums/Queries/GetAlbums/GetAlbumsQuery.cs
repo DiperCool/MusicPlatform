@@ -19,8 +19,8 @@ namespace Web.Application.Albums.Queries.GetAlbums
     public class GetAlbumsQuery: IRequest<PaginatedList<AlbumDTO>>
     {
         public int ArtistId { get; set; }
-        public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 1;
+        public int AlbumId { get; set; } = 1;
     }
     public class GetAlbumsQueryHandler : IRequestHandler<GetAlbumsQuery, PaginatedList<AlbumDTO>>
     {
@@ -37,12 +37,12 @@ namespace Web.Application.Albums.Queries.GetAlbums
         {
             return await _context.Albums
                         .Where(x=>x.Artist.Id==request.ArtistId)
-                        .OrderBy(x=>x.Title)
+                        .OrderBy(x=>x.CreatedAt)
                         .Include(x=>x.Artist)
                             .ThenInclude(x=>x.Profile)
                         .Include(x=>x.Picture)
                         .ProjectTo<AlbumDTO>(_mapper.ConfigurationProvider)
-                        .PaginatedListAsync(request.PageNumber, request.PageSize);
+                        .PaginatedListAsync(request.AlbumId, request.PageSize);
         }
     }
 }

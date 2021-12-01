@@ -28,13 +28,13 @@ export const SettingsAlbum=(props)=>{
         )
     }
     return (
-        <div class="settings-album">
-            <div class="settings-album-information">
+        <div className="settings-album">
+            <div className="settings-album-information">
                 <div>
-                    <img class="settings-album-picture" src={album.picture} alt="Album"/>
+                    <img className="settings-album-picture" src={album.picture} alt="Album"/>
                 </div>
-                <div class="settings-album-title-buttons">
-                    <div class="settings-album-title">
+                <div className="settings-album-title-buttons">
+                    <div className="settings-album-title">
                         {album.title}
                     </div>
                     <div clas="settings-album-buttons">

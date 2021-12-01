@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Application.Common.Mappings;
 using Web.Domain.Entities;
+using Web.Domain.Interfaces;
 
 namespace Web.Application.Common.DTOs
 {
-    public class AlbumDTO: IMapFrom<Album>
+    public class AlbumDTO: IMapFrom<Album>, IPaginated
     {
         public int Id { get; set; }
         public string Title { get; set; }

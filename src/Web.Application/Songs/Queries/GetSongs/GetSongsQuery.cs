@@ -17,7 +17,7 @@ namespace Web.Application.Songs.Queries.GetSongs
     public class GetSongsQuery : IRequest<PaginatedList<SongDTO>>
     {
         public int AlbumId { get; set; }
-        public int PageNumber { get; set; } = 1;
+        public int SongId { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }
     public class GetSongsQueryHandler : IRequestHandler<GetSongsQuery, PaginatedList<SongDTO>>
@@ -41,7 +41,7 @@ namespace Web.Application.Songs.Queries.GetSongs
                         .Include(x=>x.Album)
                             .ThenInclude(x=>x.Artist)
                         .ProjectTo<SongDTO>(_mapper.ConfigurationProvider)
-                        .PaginatedListAsync(request.PageNumber, request.PageSize);
+                        .PaginatedListAsync(request.SongId, request.PageSize);
         }
     }
 }

@@ -12,8 +12,6 @@ namespace Web.Application.Albums.Queries.GetAlbums
         {
             RuleFor(x=>x.ArtistId)
                 .NotEmpty();
-            RuleFor(x=>x.PageNumber)
-                .GreaterThanOrEqualTo(1);
             RuleFor(x=>x.PageSize)
                 .GreaterThanOrEqualTo(1);
         }
