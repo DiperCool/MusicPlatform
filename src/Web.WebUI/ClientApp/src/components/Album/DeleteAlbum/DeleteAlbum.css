@@ -1,0 +1,9 @@
+.delete-album-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-album-buttons{
+    display: flex;
+    flex-direction: row;
+}

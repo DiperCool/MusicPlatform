@@ -37,6 +37,12 @@ export const ViewAllArtistsAlbums = ()=>{
         });
         setAlbums(albumsCopy);
     })
+    useCustomEventListener("deleteAlbum", (data)=>{
+        let albumsCopy = [...albums];
+        
+        albumsCopy=albumsCopy.filter(x=> x.id!==Number(data.albumId));
+        setAlbums(albumsCopy);
+    });
     let clickLoadMoreButton = async()=>{
         await loadAlbums(pagination.id, pagination.pageSize)
     }

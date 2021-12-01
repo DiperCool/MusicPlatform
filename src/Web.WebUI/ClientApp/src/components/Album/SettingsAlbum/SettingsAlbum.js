@@ -44,7 +44,9 @@ export const SettingsAlbum=(props)=>{
                                 Change Album
                             </Button>
                         </Link>
-                        <Button>Delete Album</Button>
+                        <Link to={`/settings/artist/album/delete/${album.id}`}>
+                            <Button>Delete Album</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
