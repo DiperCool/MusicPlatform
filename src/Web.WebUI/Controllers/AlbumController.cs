@@ -11,6 +11,7 @@ using Web.Application.Albums.Commands.DeleteAlbum;
 using Web.Application.Albums.Commands.UpdatePicturesAlbum;
 using Web.Application.Albums.Queries.GetAlbum;
 using Web.Application.Albums.Queries.GetAlbums;
+using Web.Application.Albums.Queries.HasAlbumArtist;
 using Web.Application.Common.Models;
 using Web.WebUI.ExtensionsMethods;
 using Web.WebUI.Models;
@@ -54,6 +55,11 @@ namespace Web.WebUI.Controllers
         public async Task<IActionResult> GetAlbum(int AlbumId)
         {
             return Ok(await Mediator.Send(new GetAlbumQuery{ AlbumId = AlbumId}));
+        }
+        [HttpGet("HasAlbumArtist/{AlbumId}")]
+        public async Task<IActionResult> HasAlbumArtist(int AlbumId)
+        {
+            return Ok(await Mediator.Send(new HasAlbumArtistQuery{ AlbumId = AlbumId}));
         }
 
     }

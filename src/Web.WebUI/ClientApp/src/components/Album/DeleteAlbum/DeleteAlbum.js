@@ -4,9 +4,11 @@ import './DeleteAlbum.css';
 import { useHistory } from "react-router-dom";
 import { AuthorizationContext } from "../../api-authorization/AuthorizationContext";
 import { emitCustomEvent } from 'react-custom-events';
+import { useRedirectAlbumNotArtist } from '../../Hooks/useRedirectAlbumNotArtist';
 export const DeleteAlbum = (props)=>{
     let { getAccessToken}= useContext(AuthorizationContext);
     let history = useHistory();
+    useRedirectAlbumNotArtist(props.match.params.id)
     let handlerDeleteAlbum = async()=>{
         const response = await fetch("api/album/", {
             method: "DELETE",

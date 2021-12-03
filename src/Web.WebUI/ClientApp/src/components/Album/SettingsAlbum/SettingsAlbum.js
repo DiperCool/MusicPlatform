@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthorizationContext } from "../../api-authorization/AuthorizationContext";
 import "./SettingsAlbum.css";
+import { useHistory } from "react-router";
 import {Button} from "../../Components/Button/Button"
 import {Link} from "react-router-dom"
+import { useRedirectAlbumNotArtist } from "../../Hooks/useRedirectAlbumNotArtist";
 export const SettingsAlbum=(props)=>{
     let [album, setAlbum] = useState(null);
-    let { getAccessToken}= useContext(AuthorizationContext);
+    let { getAccessToken, getUser}= useContext(AuthorizationContext);
+    let history = useHistory();
     useEffect(()=>{
         let loadAlbum = async ()=>{
             setAlbum(null);
@@ -20,6 +23,7 @@ export const SettingsAlbum=(props)=>{
         };
         loadAlbum();
     },[props.match.params.id,getAccessToken])
+    useRedirectAlbumNotArtist(album?.id?? null);
     if(!album){
         return(
             <div>

@@ -9,9 +9,11 @@ import * as Yup from 'yup';
 import { useHistory } from "react-router-dom";
 import { AuthorizationContext } from "../../api-authorization/AuthorizationContext";
 import { emitCustomEvent } from 'react-custom-events';
+import { useRedirectAlbumNotArtist } from "../../Hooks/useRedirectAlbumNotArtist";
 export const ChangeAlbum = (props)=>{
     let { getAccessToken}= useContext(AuthorizationContext);
     let history = useHistory();
+    useRedirectAlbumNotArtist(props.match.params.id)
     return (
         <Formik
             initialValues={{ title: '', file: null }}
