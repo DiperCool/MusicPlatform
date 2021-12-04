@@ -1,0 +1,16 @@
+.song-change-button{
+    display: flex;
+    align-items: center;
+}
+
+.song-change-content{
+    display: block;
+}
+
+.song-change-content > div{
+    margin-top: 10px;
+}
+
+.text-field-change-song{
+    width: 325px
+}

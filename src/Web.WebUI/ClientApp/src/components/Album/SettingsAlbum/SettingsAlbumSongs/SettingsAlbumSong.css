@@ -7,7 +7,7 @@
     color: var(--settings-album-song-primary-color)
 }
 .settings-album-song-content{
-    transition: all .2s;
+    transition: all .3s;
     font-size: 20px;
     height: 50px;
 }

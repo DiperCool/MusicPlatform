@@ -35,7 +35,7 @@ namespace Web.Application.Songs.Queries.GetSongs
         {
             return await _context.Songs
                         .Where(x=>x.AlbumId==request.AlbumId)
-                        .OrderBy(x=>x.Title)
+                        .OrderBy(x=>x.CreatedAt)
                         .Include(x=>x.Album)
                             .ThenInclude(x=>x.Picture)
                         .Include(x=>x.Album)
