@@ -8,6 +8,7 @@ import { AlbumCreate } from "../Album/CreateAlbum/AlbumCreate";
 import { SettingsAlbum } from "../Album/SettingsAlbum/SettingsAlbum";
 import { ChangeAlbum } from "../Album/ChangeAlbum/ChangeAlbum";
 import { DeleteAlbum } from "../Album/DeleteAlbum/DeleteAlbum";
+import { CreateSong } from "../Song/CreateSong/CreateSong";
 export const Router = ()=>{
     return (
         <main className="main" style={{gridArea: "main"  , overflow: "auto"}}>
@@ -16,6 +17,8 @@ export const Router = ()=>{
             <AuthorizeRoute path="/settings/artist/album/:id" exact component={SettingsAlbum} roles={["Artist"]}/>
             
             <AuthorizeRoute path="/settings/artist/album/delete/:id" exact component={DeleteAlbum} roles={["Artist"]}/>
+            
+            <AuthorizeRoute path="/artist/album/createSong/:id" exact component={CreateSong} roles={["Artist"]}/>
 
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         </main>

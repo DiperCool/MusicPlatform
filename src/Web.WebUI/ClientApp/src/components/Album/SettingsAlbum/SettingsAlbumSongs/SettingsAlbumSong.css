@@ -1,0 +1,23 @@
+:root{
+    --settings-album-song-primary-color:rgb(18, 18, 18);
+    --settings-album-song-color:#fff;
+}
+.settings-album-song-content:hover{
+    background: var(--settings-album-song-color);
+    color: var(--settings-album-song-primary-color)
+}
+.settings-album-song-content{
+    transition: all .2s;
+    font-size: 20px;
+    height: 50px;
+}
+.settings-album-song-icon{
+    display: none;
+}
+
+.settings-album-song-content:hover .settings-album-song-icon{
+    display: block;
+    background: var(--settings-album-song-color);
+    color: var(--settings-album-song-primary-color);
+    width: 0px;
+}

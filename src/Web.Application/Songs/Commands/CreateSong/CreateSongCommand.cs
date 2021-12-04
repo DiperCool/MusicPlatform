@@ -35,7 +35,7 @@ namespace Web.Application.Songs.Commands.CreateSong
 
         public async Task<int> Handle(CreateSongCommand request, CancellationToken cancellationToken)
         {
-            if(await _context.Albums.AnyAsync(x=>x.Id == request.AlbumId && x.Artist.UserId==_currentUserService.UserId))
+            if(! await _context.Albums.AnyAsync(x=>x.Id == request.AlbumId && x.Artist.UserId==_currentUserService.UserId))
             {
                 throw new ForbiddenAccessException();
             }

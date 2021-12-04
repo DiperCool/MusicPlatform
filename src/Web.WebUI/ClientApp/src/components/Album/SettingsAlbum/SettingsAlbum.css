@@ -1,5 +1,6 @@
 .settings-album{
-
+    display: flex;
+    flex-direction: column;
 }
 
 .settings-album-picture{
@@ -23,7 +24,19 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
+.settings-album-buttons{
+    display: flex;
+    flex-direction: column;
+}
 .settings-album-buttons>button{
     margin-left: 5px;
+}
+
+.setting-album-button{
+    width: 100%;
+    margin-top: 5px;
+}
+
+.settings-album-load-more-button{
+    
 }

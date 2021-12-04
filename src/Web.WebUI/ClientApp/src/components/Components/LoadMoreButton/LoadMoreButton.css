@@ -1,0 +1,14 @@
+.load-more-button-wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 0!important;
+    padding: 0!important;
+}
+.load-more-button{
+    color: #fff;
+    cursor: pointer;
+}
+
+.load-more-button:hover{
+    color: silver;
+}

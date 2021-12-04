@@ -1,0 +1,16 @@
+.song-create-button{
+    display: flex;
+    align-items: center;
+}
+
+.song-create-content{
+    display: block;
+}
+
+.song-create-content > div{
+    margin-top: 10px;
+}
+
+.text-field-song-create{
+    width: 325px
+}

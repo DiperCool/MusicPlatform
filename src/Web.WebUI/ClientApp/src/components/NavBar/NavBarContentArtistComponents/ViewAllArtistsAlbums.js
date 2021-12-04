@@ -1,9 +1,9 @@
 import React, {  useContext, useEffect, useState } from "react";
 import { AuthorizationContext } from "../../api-authorization/AuthorizationContext";
 import "./ViewAllArtistsAlbums.css";
-import {CgArrowDownO} from "react-icons/cg";
 import { useCustomEventListener } from 'react-custom-events';
 import { AlbumItem } from "./AlbumItem";
+import { LoadMoreButton } from "../../Components/LoadMoreButton/LoadMoreButton";
 export const ViewAllArtistsAlbums = ()=>{
     let [albums, setAlbums]= useState([]);
     let [pagination, setPagination]= useState({
@@ -61,9 +61,7 @@ export const ViewAllArtistsAlbums = ()=>{
                 {albums.map(el=><AlbumItem key={el.id} album={el}/>)}
             </div> 
             {pagination.hasNextPage?
-            <div  className="load-more-button-wrapper">
-                <CgArrowDownO onClick={clickLoadMoreButton} size={30}  className="load-more-button "/>
-            </div>:null}
+                <LoadMoreButton onClick={clickLoadMoreButton} size={30}  className="load-more-button "/>:null}
         </div>
     )
 }
