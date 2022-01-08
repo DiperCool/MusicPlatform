@@ -14,33 +14,31 @@ using Web.Application.Common.Mappings;
 using Web.Application.Common.Models;
 using Web.Application.Common.Security;
 
-namespace Web.Application.Albums.Queries.GetAlbum
+namespace Web.Application.Albums.Queries.GetAlbum;
+[Authorize]
+public class GetAlbumQuery: IRequest<AlbumDTO>
 {
-    [Authorize]
-    public class GetAlbumQuery: IRequest<AlbumDTO>
+    public int AlbumId { get; set; }
+}
+public class GetAlbumQueryHandler : IRequestHandler<GetAlbumQuery, AlbumDTO>
+{
+    IApplicationDbContext _context;
+    IMapper _mapper;
+
+    public GetAlbumQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
-        public int AlbumId { get; set; }
+        _context = context;
+        _mapper = mapper;
     }
-    public class GetAlbumQueryHandler : IRequestHandler<GetAlbumQuery, AlbumDTO>
+
+    public async Task<AlbumDTO> Handle(GetAlbumQuery request, CancellationToken cancellationToken)
     {
-        IApplicationDbContext _context;
-        IMapper _mapper;
-
-        public GetAlbumQueryHandler(IApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
-
-        public async Task<AlbumDTO> Handle(GetAlbumQuery request, CancellationToken cancellationToken)
-        {
-            return await _context.Albums
-                        .Where(x=>x.Id==request.AlbumId)
-                        .Include(x=>x.Artist)
-                            .ThenInclude(x=>x.Profile)
-                        .Include(x=>x.Picture)
-                        .ProjectTo<AlbumDTO>(_mapper.ConfigurationProvider)
-                        .FirstOrDefaultAsync() ?? throw new NotFoundException("Album not found");
-        }
+        return await _context.Albums
+                    .Where(x=>x.Id==request.AlbumId)
+                    .Include(x=>x.Artist)
+                        .ThenInclude(x=>x.Profile)
+                    .Include(x=>x.Picture)
+                    .ProjectTo<AlbumDTO>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync() ?? throw new NotFoundException("Album not found");
     }
 }

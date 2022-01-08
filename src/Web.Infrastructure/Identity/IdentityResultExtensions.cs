@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Web.Application.Common.Models;
 
-namespace Web.Infrastructure.Identity
+namespace Web.Infrastructure.Identity;
+public static class IdentityResultExtensions
 {
-    public static class IdentityResultExtensions
+    public static Result ToApplicationResult(this IdentityResult result)
     {
-        public static Result ToApplicationResult(this IdentityResult result)
-        {
-            return result.Succeeded
-                ? Result.Success()
-                : Result.Failure(result.Errors.Select(e => e.Description));
-        }
+        return result.Succeeded
+            ? Result.Success()
+            : Result.Failure(result.Errors.Select(e => e.Description));
     }
 }

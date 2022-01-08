@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.Entities;
 
-namespace Web.Infrastructure.Services
+namespace Web.Infrastructure.Services;
+public interface IAccountService
 {
-    public interface IAccountService
-    {
-        Task<Account> CreateAccount(Account account);
-        Task<bool> IsLoginExist(string login);
-        Task<Account> GetAccountByLogin(string login);
-    }
+    Task<Account> CreateAccount(Account account);
+    Task<bool> IsLoginExist(string login);
+    Task<Account> GetAccountByLogin(string login);
 }

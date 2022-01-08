@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Albums.Queries.GetAlbum
+namespace Web.Application.Albums.Queries.GetAlbum;
+public class GetAlbumsQueryValidator: AbstractValidator<GetAlbumQuery>
 {
-    public class GetAlbumsQueryValidator: AbstractValidator<GetAlbumQuery>
+    public GetAlbumsQueryValidator()
     {
-        public GetAlbumsQueryValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
     }
 }

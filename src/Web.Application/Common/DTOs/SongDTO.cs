@@ -6,12 +6,10 @@ using Web.Application.Common.Mappings;
 using Web.Domain.Entities;
 using Web.Domain.Interfaces;
 
-namespace Web.Application.Common.DTOs
+namespace Web.Application.Common.DTOs;
+public class SongDTO: IMapFrom<Song>, IPaginated
 {
-    public class SongDTO: IMapFrom<Song>, IPaginated
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public AlbumDTO Album { get; set; }
-    }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public AlbumDTO Album { get; set; }
 }

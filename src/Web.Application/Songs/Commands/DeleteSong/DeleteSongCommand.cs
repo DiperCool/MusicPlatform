@@ -10,36 +10,34 @@ using Web.Application.Common.Interfaces;
 using Web.Application.Common.Security;
 using Web.Domain.Entities;
 
-namespace Web.Application.Songs.Commands.DeleteSong
+namespace Web.Application.Songs.Commands.DeleteSong;
+[Authorize(Roles="Artist")]
+public class DeleteSongCommand : IRequest
 {
-    [Authorize(Roles="Artist")]
-    public class DeleteSongCommand : IRequest
+    public int SongId { get; set; }
+}
+
+public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand>
+{
+    IApplicationDbContext _context;
+    ICurrentUserService _currentUserService;
+
+    public DeleteSongCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
     {
-        public int SongId { get; set; }
+        _context = context;
+        _currentUserService = currentUserService;
     }
 
-    public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand>
+    public async Task<Unit> Handle(DeleteSongCommand request, CancellationToken cancellationToken)
     {
-        IApplicationDbContext _context;
-        ICurrentUserService _currentUserService;
-
-        public DeleteSongCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+        Song song = await _context.Songs
+                    .FirstOrDefaultAsync(x=>x.Id == request.SongId && x.Album.Artist.UserId==_currentUserService.UserId);
+        if(song ==null)
         {
-            _context = context;
-            _currentUserService = currentUserService;
+            throw new ForbiddenAccessException();
         }
-
-        public async Task<Unit> Handle(DeleteSongCommand request, CancellationToken cancellationToken)
-        {
-            Song song = await _context.Songs
-                        .FirstOrDefaultAsync(x=>x.Id == request.SongId && x.Album.Artist.UserId==_currentUserService.UserId);
-            if(song ==null)
-            {
-                throw new ForbiddenAccessException();
-            }
-            _context.Songs.Remove(song);
-            await _context.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
-        }
+        _context.Songs.Remove(song);
+        await _context.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
     }
 }

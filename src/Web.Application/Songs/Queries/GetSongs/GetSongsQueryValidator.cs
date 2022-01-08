@@ -4,16 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Songs.Queries.GetSongs
+namespace Web.Application.Songs.Queries.GetSongs;
+public class GetSongsQueryValidator : AbstractValidator<GetSongsQuery>
 {
-    public class GetSongsQueryValidator : AbstractValidator<GetSongsQuery>
+    public GetSongsQueryValidator()
     {
-        public GetSongsQueryValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-            RuleFor(x=>x.PageSize)
-                .GreaterThanOrEqualTo(1);
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
+        RuleFor(x=>x.PageSize)
+            .GreaterThanOrEqualTo(1);
     }
 }

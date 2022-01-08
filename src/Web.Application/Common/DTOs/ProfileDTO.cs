@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Web.Application.Common.Mappings;
 
-namespace Web.Application.Common.DTOs
+namespace Web.Application.Common.DTOs;
+public class ProfileDTO: IMapFrom<Web.Domain.Entities.Profile>
 {
-    public class ProfileDTO: IMapFrom<Web.Domain.Entities.Profile>
-    {
-        public int Id { get; set; }
-        public string Login { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
+    public int Id { get; set; }
+    public string Login { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }

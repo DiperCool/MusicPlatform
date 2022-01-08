@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Web.Application.Common.Models;
 
-namespace Web.WebUI.Models
+namespace Web.WebUI.Models;
+public class UpdateAlbumModel
 {
-    public class UpdateAlbumModel
-    {
-        public int AlbumId{ get ;set; }
-        public string Title { get; set;}
-        public IFormFile File { get; set; }
-    }
+    public int AlbumId{ get ;set; }
+    public string Title { get; set;}
+    public IFormFile File { get; set; }
 }

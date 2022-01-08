@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Albums.Commands.UpdatePicturesAlbum
+namespace Web.Application.Albums.Commands.UpdatePicturesAlbum;
+public class UpdateAlbumCommandValidator: AbstractValidator<UpdateAlbumCommand>
 {
-    public class UpdateAlbumCommandValidator: AbstractValidator<UpdateAlbumCommand>
+    public UpdateAlbumCommandValidator()
     {
-        public UpdateAlbumCommandValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
     }
 }

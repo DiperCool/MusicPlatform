@@ -4,13 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.Entities;
 
-namespace Web.Application.Common.Interfaces
+namespace Web.Application.Common.Interfaces;
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        string UserId { get; }
-        Task<Artist> GetArtistByUserId();
-        Task<Listener> GetListenerByUserId();
-        Task<Account> GetAccountByUserId();
-    }
+    string UserId { get; }
+    Task<Artist> GetArtistByUserId();
+    Task<Listener> GetListenerByUserId();
+    Task<Account> GetAccountByUserId();
 }

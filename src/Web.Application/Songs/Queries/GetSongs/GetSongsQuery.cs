@@ -12,36 +12,34 @@ using Web.Application.Common.Interfaces;
 using Web.Application.Common.Mappings;
 using Web.Application.Common.Models;
 
-namespace Web.Application.Songs.Queries.GetSongs
+namespace Web.Application.Songs.Queries.GetSongs;
+public class GetSongsQuery : IRequest<PaginatedList<SongDTO>>
 {
-    public class GetSongsQuery : IRequest<PaginatedList<SongDTO>>
+    public int AlbumId { get; set; }
+    public int SongId { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+}
+public class GetSongsQueryHandler : IRequestHandler<GetSongsQuery, PaginatedList<SongDTO>>
+{
+    IApplicationDbContext _context;
+    IMapper _mapper;
+
+    public GetSongsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
-        public int AlbumId { get; set; }
-        public int SongId { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        _context = context;
+        _mapper = mapper;
     }
-    public class GetSongsQueryHandler : IRequestHandler<GetSongsQuery, PaginatedList<SongDTO>>
+
+    public async Task<PaginatedList<SongDTO>> Handle(GetSongsQuery request, CancellationToken cancellationToken)
     {
-        IApplicationDbContext _context;
-        IMapper _mapper;
-
-        public GetSongsQueryHandler(IApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
-
-        public async Task<PaginatedList<SongDTO>> Handle(GetSongsQuery request, CancellationToken cancellationToken)
-        {
-            return await _context.Songs
-                        .Where(x=>x.AlbumId==request.AlbumId)
-                        .OrderBy(x=>x.CreatedAt)
-                        .Include(x=>x.Album)
-                            .ThenInclude(x=>x.Picture)
-                        .Include(x=>x.Album)
-                            .ThenInclude(x=>x.Artist)
-                        .ProjectTo<SongDTO>(_mapper.ConfigurationProvider)
-                        .PaginatedListAsync(request.SongId, request.PageSize);
-        }
+        return await _context.Songs
+                    .Where(x=>x.AlbumId==request.AlbumId)
+                    .OrderBy(x=>x.CreatedAt)
+                    .Include(x=>x.Album)
+                        .ThenInclude(x=>x.Picture)
+                    .Include(x=>x.Album)
+                        .ThenInclude(x=>x.Artist)
+                    .ProjectTo<SongDTO>(_mapper.ConfigurationProvider)
+                    .PaginatedListAsync(request.SongId, request.PageSize);
     }
 }

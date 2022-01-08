@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 using Web.Application.Common.Models;
 using Web.Domain.Entities;
 
-namespace Web.Application.Common.Interfaces
+namespace Web.Application.Common.Interfaces;
+public interface IFileService
 {
-    public interface IFileService
-    {
-        PathToFile SaveFile(FileModel model);
-        void DeleteFile(string path);
-        string GetWebRootPath();
-    }
+    PathToFile SaveFile(FileModel model);
+    void DeleteFile(string path);
+    string GetWebRootPath();
 }

@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Albums.Commands.DeleteAlbum
+namespace Web.Application.Albums.Commands.DeleteAlbum;
+public class DeleteAlbumCommandValidator : AbstractValidator<DeleteAlbumCommand>
 {
-    public class DeleteAlbumCommandValidator : AbstractValidator<DeleteAlbumCommand>
+    public DeleteAlbumCommandValidator()
     {
-        public DeleteAlbumCommandValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
     }
 }

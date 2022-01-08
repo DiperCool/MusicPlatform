@@ -12,40 +12,38 @@ using Web.Application.Common.Models;
 using Web.Application.Common.Security;
 using Web.Domain.Entities;
 
-namespace Web.Application.Albums.Commands.CreateAlbum
+namespace Web.Application.Albums.Commands.CreateAlbum;
+[Authorize(Roles = "Artist")]
+public class CreateAlbumCommand : IRequest<AlbumDTO>
 {
-    [Authorize(Roles = "Artist")]
-    public class CreateAlbumCommand : IRequest<AlbumDTO>
+    public string Title { get; set; }
+    public FileModel File { get; set; }
+
+    public class CreateAlbumCommandHandle : IRequestHandler<CreateAlbumCommand, AlbumDTO>
     {
-        public string Title { get; set; }
-        public FileModel File { get; set; }
+        IApplicationDbContext _context;
+        ICurrentUserService _currentUser;
+        IFileService _fileService;
+        IMapper _mapper;
 
-        public class CreateAlbumCommandHandle : IRequestHandler<CreateAlbumCommand, AlbumDTO>
+        public CreateAlbumCommandHandle(IApplicationDbContext context, ICurrentUserService currentUser, IFileService fileService, IMapper mapper)
         {
-            IApplicationDbContext _context;
-            ICurrentUserService _currentUser;
-            IFileService _fileService;
-            IMapper _mapper;
+            _context = context;
+            _currentUser = currentUser;
+            _fileService = fileService;
+            _mapper = mapper;
+        }
 
-            public CreateAlbumCommandHandle(IApplicationDbContext context, ICurrentUserService currentUser, IFileService fileService, IMapper mapper)
-            {
-                _context = context;
-                _currentUser = currentUser;
-                _fileService = fileService;
-                _mapper = mapper;
-            }
-
-            public async Task<AlbumDTO> Handle(CreateAlbumCommand request, CancellationToken cancellationToken)
-            {
-                Album album = new Album { Title = request.Title };
-                Artist artist = await _currentUser.GetArtistByUserId();
-                album.Artist = artist;
-                album.CreatedAt=  DateTime.Now.ToUniversalTime();
-                album.Picture=_fileService.SaveFile(request.File);
-                _context.Albums.Add(album);
-                await _context.SaveChangesAsync(cancellationToken);
-                return _mapper.Map<AlbumDTO>(album);
-            }
+        public async Task<AlbumDTO> Handle(CreateAlbumCommand request, CancellationToken cancellationToken)
+        {
+            Album album = new Album { Title = request.Title };
+            Artist artist = await _currentUser.GetArtistByUserId();
+            album.Artist = artist;
+            album.CreatedAt=  DateTime.Now.ToUniversalTime();
+            album.Picture=_fileService.SaveFile(request.File);
+            _context.Albums.Add(album);
+            await _context.SaveChangesAsync(cancellationToken);
+            return _mapper.Map<AlbumDTO>(album);
         }
     }
 }

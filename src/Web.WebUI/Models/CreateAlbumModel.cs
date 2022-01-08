@@ -4,11 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Web.WebUI.Models
+namespace Web.WebUI.Models;
+public class CreateAlbumModel
 {
-    public class CreateAlbumModel
-    {
-        public string Title { get; set; }
-        public IFormFile File { get; set; }
-    }
+    public string Title { get; set; }
+    public IFormFile File { get; set; }
 }

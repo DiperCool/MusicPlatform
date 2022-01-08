@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Web.Application.Common.Mappings;
 using Web.Domain.Entities;
 
-namespace Web.Application.Common.DTOs
+namespace Web.Application.Common.DTOs;
+public class ArtistDTO : IMapFrom<Artist>
 {
-    public class ArtistDTO : IMapFrom<Artist>
-    {
-        public int Id { get; set; }
-        public ProfileDTO Profile { get; set; }
-    }
+    public int Id { get; set; }
+    public ProfileDTO Profile { get; set; }
 }

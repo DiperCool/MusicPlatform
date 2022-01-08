@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 
-namespace Web.Application.Common.Mappings
+namespace Web.Application.Common.Mappings;
+public interface IMapFrom<T>
 {
-    public interface IMapFrom<T>
-    {
-        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
-    }
+    void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
 }

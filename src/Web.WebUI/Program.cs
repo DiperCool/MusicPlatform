@@ -10,43 +10,42 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Web.Infrastructure.Persistence;
 
-namespace Web.WebUI
+namespace Web.WebUI;
+
+public class Program
 {
-    public class Program
+    public async static Task Main(string[] args)
     {
-        public async static Task Main(string[] args)
+        var host = CreateHostBuilder(args).Build();
+        using (var scope = host.Services.CreateScope())
         {
-            var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
+            var services = scope.ServiceProvider;
+
+            try
             {
-                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationDbContext>();
+            
 
-                try
-                {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-             
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    await ApplicationDbContextSeed.SeedDefaultUserAsync(roleManager);
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                    throw;
-                }
-                await host.RunAsync();
+                await ApplicationDbContextSeed.SeedDefaultUserAsync(roleManager);
             }
-        }
+            catch (Exception ex)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                throw;
+            }
+            await host.RunAsync();
+        }
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
 }

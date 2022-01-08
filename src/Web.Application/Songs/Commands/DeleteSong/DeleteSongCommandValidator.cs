@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Songs.Commands.DeleteSong
+namespace Web.Application.Songs.Commands.DeleteSong;
+public class DeleteSongCommandValidator: AbstractValidator<DeleteSongCommand>
 {
-    public class DeleteSongCommandValidator: AbstractValidator<DeleteSongCommand>
+    public DeleteSongCommandValidator()
     {
-        public DeleteSongCommandValidator()
-        {
-            RuleFor(x=>x.SongId)
-                .NotEmpty();
-        }
+        RuleFor(x=>x.SongId)
+            .NotEmpty();
     }
 }

@@ -4,19 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Web.Application.Songs.Commands.CreateSong
+namespace Web.Application.Songs.Commands.CreateSong;
+public class CreateSongCommandValidator : AbstractValidator<CreateSongCommand>
 {
-    public class CreateSongCommandValidator : AbstractValidator<CreateSongCommand>
+    public CreateSongCommandValidator()
     {
-        public CreateSongCommandValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-            RuleFor(x=>x.Title)
-                .NotEmpty()
-                .MaximumLength(20);
-            RuleFor(x=>x.File)
-                .NotNull();
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
+        RuleFor(x=>x.Title)
+            .NotEmpty()
+            .MaximumLength(20);
+        RuleFor(x=>x.File)
+            .NotNull();
     }
 }

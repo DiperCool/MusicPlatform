@@ -11,58 +11,56 @@ using Web.Application.Common.Models;
 using Web.Application.Common.Security;
 using Web.Domain.Entities;
 
-namespace Web.Application.Albums.Commands.UpdatePicturesAlbum
+namespace Web.Application.Albums.Commands.UpdatePicturesAlbum;
+[Authorize(Roles ="Artist")]
+public class UpdateAlbumCommand : IRequest<UpdateAlbumResult>
 {
-    [Authorize(Roles ="Artist")]
-    public class UpdateAlbumCommand : IRequest<UpdateAlbumResult>
+    public FileModel File { get; set; }
+    public int AlbumId { get; set; }
+    public string Title { get; set; }
+}
+
+public class UpdateAlbumCommandHandle : IRequestHandler<UpdateAlbumCommand, UpdateAlbumResult>
+{
+    IFileService _fileService;
+    IApplicationDbContext _context;
+
+    ICurrentUserService _userService;
+
+    public UpdateAlbumCommandHandle(IFileService fileService, IApplicationDbContext context, ICurrentUserService userService)
     {
-        public FileModel File { get; set; }
-        public int AlbumId { get; set; }
-        public string Title { get; set; }
+        _fileService = fileService;
+        _context = context;
+        _userService = userService;
     }
 
-    public class UpdateAlbumCommandHandle : IRequestHandler<UpdateAlbumCommand, UpdateAlbumResult>
+    public async Task<UpdateAlbumResult> Handle(UpdateAlbumCommand request, CancellationToken cancellationToken)
     {
-        IFileService _fileService;
-        IApplicationDbContext _context;
-
-        ICurrentUserService _userService;
-
-        public UpdateAlbumCommandHandle(IFileService fileService, IApplicationDbContext context, ICurrentUserService userService)
+        Album album = await _context.Albums
+                            .Include(x=>x.Picture)
+                            .FirstOrDefaultAsync(x=>x.Artist.UserId==_userService.UserId && x.Id == request.AlbumId);
+        if(album== null)
         {
-            _fileService = fileService;
-            _context = context;
-            _userService = userService;
+            throw new NotFoundException("Album not found");
         }
-
-        public async Task<UpdateAlbumResult> Handle(UpdateAlbumCommand request, CancellationToken cancellationToken)
+        if(request.File != null)
         {
-            Album album = await _context.Albums
-                                .Include(x=>x.Picture)
-                                .FirstOrDefaultAsync(x=>x.Artist.UserId==_userService.UserId && x.Id == request.AlbumId);
-            if(album== null)
-            {
-                throw new NotFoundException("Album not found");
-            }
-            if(request.File != null)
-            {
-                _fileService.DeleteFile(album.Picture.FullPath);
-                PathToFile pathToFile = _fileService.SaveFile(request.File);
-                album.Picture.FullPath = pathToFile.FullPath;
-                album.Picture.ShortPath= pathToFile.ShortPath;
-                _context.PathesToFiles.Update(album.Picture);
-                
-            }
-            if(!string.IsNullOrEmpty(request.Title))
-            {
-                album.Title= request.Title;
-                _context.Albums.Update(album);
-            }
-            await _context.SaveChangesAsync(cancellationToken);
-            return new UpdateAlbumResult{
-                Title = album.Title,
-                ShortPath = album.Picture.ShortPath
-            };
+            _fileService.DeleteFile(album.Picture.FullPath);
+            PathToFile pathToFile = _fileService.SaveFile(request.File);
+            album.Picture.FullPath = pathToFile.FullPath;
+            album.Picture.ShortPath= pathToFile.ShortPath;
+            _context.PathesToFiles.Update(album.Picture);
+            
         }
+        if(!string.IsNullOrEmpty(request.Title))
+        {
+            album.Title= request.Title;
+            _context.Albums.Update(album);
+        }
+        await _context.SaveChangesAsync(cancellationToken);
+        return new UpdateAlbumResult{
+            Title = album.Title,
+            ShortPath = album.Picture.ShortPath
+        };
     }
 }

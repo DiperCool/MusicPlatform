@@ -4,15 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.Interfaces;
 
-namespace Web.Domain.Entities
+namespace Web.Domain.Entities;
+public class Song
 {
-    public class Song
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public int AlbumId { get; set; }
-        public Album Album { get; set; }
-        public PathToFile File { get; set; }
-        public DateTime CreatedAt { get; set; }
-    }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public int AlbumId { get; set; }
+    public Album Album { get; set; }
+    public PathToFile File { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

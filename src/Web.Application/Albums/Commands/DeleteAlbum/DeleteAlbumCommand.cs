@@ -9,34 +9,32 @@ using Web.Application.Common.Exceptions;
 using Web.Application.Common.Interfaces;
 using Web.Domain.Entities;
 
-namespace Web.Application.Albums.Commands.DeleteAlbum
+namespace Web.Application.Albums.Commands.DeleteAlbum;
+public class DeleteAlbumCommand : IRequest
 {
-    public class DeleteAlbumCommand : IRequest
+    public int AlbumId { get; set; }
+}
+
+public class DeleteAlbumCommandHandle : IRequestHandler<DeleteAlbumCommand>
+{
+    IApplicationDbContext _context;
+    ICurrentUserService _currentUser;
+
+    public DeleteAlbumCommandHandle(IApplicationDbContext context, ICurrentUserService currentUser)
     {
-        public int AlbumId { get; set; }
+        _context = context;
+        _currentUser = currentUser;
     }
 
-    public class DeleteAlbumCommandHandle : IRequestHandler<DeleteAlbumCommand>
+    public async Task<Unit> Handle(DeleteAlbumCommand request, CancellationToken cancellationToken)
     {
-        IApplicationDbContext _context;
-        ICurrentUserService _currentUser;
-
-        public DeleteAlbumCommandHandle(IApplicationDbContext context, ICurrentUserService currentUser)
+        Album album = await _context.Albums.FirstOrDefaultAsync(x=>x.Artist.UserId == _currentUser.UserId && x.Id==request.AlbumId);
+        if(album== null)
         {
-            _context = context;
-            _currentUser = currentUser;
+            throw new NotFoundException("Album not found");
         }
-
-        public async Task<Unit> Handle(DeleteAlbumCommand request, CancellationToken cancellationToken)
-        {
-            Album album = await _context.Albums.FirstOrDefaultAsync(x=>x.Artist.UserId == _currentUser.UserId && x.Id==request.AlbumId);
-            if(album== null)
-            {
-                throw new NotFoundException("Album not found");
-            }
-            _context.Albums.Remove(album);
-            await _context.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
-        }
+        _context.Albums.Remove(album);
+        await _context.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
     }
 }

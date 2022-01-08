@@ -1,7 +1,5 @@
-namespace Web.Domain.Interfaces
+namespace Web.Domain.Interfaces;
+public interface IPaginated
 {
-    public interface IPaginated
-    {
-        int Id { get; set; }
-    }
+    int Id { get; set; }
 }

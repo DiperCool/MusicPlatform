@@ -1,13 +1,11 @@
 using FluentValidation;
 
-namespace Web.Application.Albums.Queries.HasAlbumArtist
+namespace Web.Application.Albums.Queries.HasAlbumArtist;
+public class HasAlbumArtistQueryValidator: AbstractValidator<HasAlbumArtistQuery>
 {
-    public class HasAlbumArtistQueryValidator: AbstractValidator<HasAlbumArtistQuery>
+    public HasAlbumArtistQueryValidator()
     {
-        public HasAlbumArtistQueryValidator()
-        {
-            RuleFor(x=>x.AlbumId)
-                .NotEmpty();
-        }
+        RuleFor(x=>x.AlbumId)
+            .NotEmpty();
     }
 }

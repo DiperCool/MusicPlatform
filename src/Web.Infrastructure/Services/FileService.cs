@@ -8,35 +8,33 @@ using Web.Application.Common.Interfaces;
 using Web.Application.Common.Models;
 using Web.Domain.Entities;
 
-namespace Web.Infrastructure.Services
+namespace Web.Infrastructure.Services;
+public class FileService : IFileService
 {
-    public class FileService : IFileService
+    IWebHostEnvironment _host;
+
+    public FileService(IWebHostEnvironment host)
     {
-        IWebHostEnvironment _host;
+        _host = host;
+    }
 
-        public FileService(IWebHostEnvironment host)
-        {
-            _host = host;
-        }
+    public void DeleteFile(string path)
+    {
+        File.Delete(path);
+    }
 
-        public void DeleteFile(string path)
-        {
-            File.Delete(path);
-        }
+    public string GetWebRootPath() => _host.WebRootPath;
 
-        public string GetWebRootPath() => _host.WebRootPath;
-
-        public PathToFile SaveFile(FileModel model)
-        {
-            string guid = Guid.NewGuid().ToString();
-            string extensionsFile = Path.GetExtension(model.nameFile);
-            string shortPath = Path.Combine("Files", guid+extensionsFile);
-            string fullPath = Path.Combine(GetWebRootPath(), shortPath);
-            File.WriteAllBytes(fullPath,model.bytes);
-            return new PathToFile {
-                ShortPath = shortPath,
-                FullPath = fullPath
-            };
-        }
+    public PathToFile SaveFile(FileModel model)
+    {
+        string guid = Guid.NewGuid().ToString();
+        string extensionsFile = Path.GetExtension(model.nameFile);
+        string shortPath = Path.Combine("Files", guid+extensionsFile);
+        string fullPath = Path.Combine(GetWebRootPath(), shortPath);
+        File.WriteAllBytes(fullPath,model.bytes);
+        return new PathToFile {
+            ShortPath = shortPath,
+            FullPath = fullPath
+        };
     }
 }

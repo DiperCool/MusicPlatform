@@ -11,38 +11,36 @@ using Web.Application.Common.Models;
 using Web.Application.Common.Security;
 using Web.Domain.Entities;
 
-namespace Web.Application.Songs.Commands.CreateSong
+namespace Web.Application.Songs.Commands.CreateSong;
+[Authorize(Roles="Artist")]
+public class CreateSongCommand: IRequest<int>
 {
-    [Authorize(Roles="Artist")]
-    public class CreateSongCommand: IRequest<int>
+    public int AlbumId { get; set; }
+    public string Title { get; set; }
+    public FileModel File { get; set; }
+}
+public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand, int>
+{
+    IApplicationDbContext _context;
+    IFileService _fileService;
+    ICurrentUserService _currentUserService;
+
+    public CreateSongCommandHandler(IApplicationDbContext context, IFileService fileService, ICurrentUserService currentUserService)
     {
-        public int AlbumId { get; set; }
-        public string Title { get; set; }
-        public FileModel File { get; set; }
+        _context = context;
+        _fileService = fileService;
+        _currentUserService = currentUserService;
     }
-    public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand, int>
+
+    public async Task<int> Handle(CreateSongCommand request, CancellationToken cancellationToken)
     {
-        IApplicationDbContext _context;
-        IFileService _fileService;
-        ICurrentUserService _currentUserService;
-
-        public CreateSongCommandHandler(IApplicationDbContext context, IFileService fileService, ICurrentUserService currentUserService)
+        if(! await _context.Albums.AnyAsync(x=>x.Id == request.AlbumId && x.Artist.UserId==_currentUserService.UserId))
         {
-            _context = context;
-            _fileService = fileService;
-            _currentUserService = currentUserService;
+            throw new ForbiddenAccessException();
         }
-
-        public async Task<int> Handle(CreateSongCommand request, CancellationToken cancellationToken)
-        {
-            if(! await _context.Albums.AnyAsync(x=>x.Id == request.AlbumId && x.Artist.UserId==_currentUserService.UserId))
-            {
-                throw new ForbiddenAccessException();
-            }
-            Song song = new Song{ Title = request.Title, AlbumId = request.AlbumId, File = _fileService.SaveFile(request.File), CreatedAt =  DateTime.Now.ToUniversalTime() };
-            _context.Songs.Add(song);
-            await _context.SaveChangesAsync(cancellationToken);
-            return song.Id;
-        }
+        Song song = new Song{ Title = request.Title, AlbumId = request.AlbumId, File = _fileService.SaveFile(request.File), CreatedAt =  DateTime.Now.ToUniversalTime() };
+        _context.Songs.Add(song);
+        await _context.SaveChangesAsync(cancellationToken);
+        return song.Id;
     }
 }
