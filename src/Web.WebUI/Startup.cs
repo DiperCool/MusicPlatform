@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System;
 using Duende.IdentityServer.Services;
+using System.Text.Json.Serialization;
 
 namespace Web.WebUI;
 public class Startup
@@ -41,7 +42,13 @@ public class Startup
         services.AddTransient<IProfileService, IdentityProfileService>();
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+                .AddFluentValidation(x => x.AutomaticValidationEnabled = false)
+            .AddJsonOptions(opts =>
+            {
+                var enumConverter = new JsonStringEnumConverter();
+                opts.JsonSerializerOptions.Converters.Add(enumConverter);
+            });
+
         services.AddRazorPages();
         services.Configure<ApiBehaviorOptions>(options =>
         {

@@ -31,7 +31,6 @@ public class PaginatedList<T> where T :  IPaginated
 
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int id, int pageSize)
     {
-        var count = await source.CountAsync();
         var items = new List<T>();
         if(id<= 0)
         {

@@ -57,7 +57,7 @@ export const SettingsAlbum=(props)=>{
         loadSongs();
     },[props.match.params.id,getAccessToken])
     useRedirectAlbumNotArtist(album?.id?? null);
-    if(!album || songs.length===0){
+    if(!album){
         return(
             <div>
                 Loading...
