@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using Web.Application.Common.Interfaces;
 using Web.Domain.Entities;
 using Web.Infrastructure.Identity;
 using Web.Infrastructure.Services;
+using Web.WebUI.ExtensionsMethods;
 
 namespace Web.WebUI.Areas.Identity.Pages.Account.Manage;
 public partial class IndexModel : PageModel
@@ -18,17 +20,20 @@ public partial class IndexModel : PageModel
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IProfileService _profileService;
     private readonly IAccountService _accountService;
+    private readonly IFileService _fileService;
 
     public IndexModel(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IProfileService profileService,
-        IAccountService accountService)
+        IAccountService accountService,
+        IFileService fileService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _profileService = profileService;
         _accountService = accountService;
+        _fileService= fileService;
     }
 
     public string Username { get; set; }
@@ -38,6 +43,7 @@ public partial class IndexModel : PageModel
 
     [BindProperty]
     public InputModel Input { get; set; }
+
 
     public class InputModel
     {
@@ -53,6 +59,10 @@ public partial class IndexModel : PageModel
         [Display(Name = "Last Name")]
         [StringLength(20,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
+        [BindProperty]
+        [Display(Name = "Upload your picture")]
+        public IFormFile Picture { set; get; }
+        public string PathPicture { get; set; }
     }
 
     private async Task LoadAsync(ApplicationUser user, Profile profile)
@@ -65,7 +75,8 @@ public partial class IndexModel : PageModel
         {
             Login = profile.Login,
             FirstName = profile.FirstName,
-            LastName= profile.LastName
+            LastName= profile.LastName,
+            PathPicture = profile.Picture.ShortPath
         };
     }
 
@@ -89,6 +100,7 @@ public partial class IndexModel : PageModel
             return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
         }
         Profile profile= await _profileService.GetProfileByUserId(user.Id);
+        PathToFile pathToFile = profile.Picture;
         if (!ModelState.IsValid)
         {
             await LoadAsync(user, profile);
@@ -100,7 +112,24 @@ public partial class IndexModel : PageModel
             await LoadAsync(user, profile);
             return Page();
         }
-        await _profileService.UpdateProfile(user.Id,new Profile{ UserId= user.Id, Id = profile.Id,Login = Input.Login, FirstName = Input.FirstName, LastName= Input.LastName });
+        if (Input.Picture != null)
+        {
+            PathToFile pathToFileNew =_fileService.SaveFile(await Input.Picture.ConvertToFileModelAsync());
+            if (pathToFile!= null)
+            {
+                pathToFile.ShortPath=pathToFileNew.ShortPath;
+                pathToFile.FullPath= pathToFile.FullPath;
+            }
+            else
+            {
+                pathToFile= pathToFileNew;
+            }
+        }
+        profile.Login = Input.Login;
+        profile.FirstName = Input.FirstName;
+        profile.LastName= Input.LastName;
+        profile.Picture= pathToFile;
+        await _profileService.UpdateProfile(user.Id, profile);
         await _signInManager.RefreshSignInAsync(user);
         StatusMessage = "Your profile has been updated";
         return RedirectToPage();

@@ -28,7 +28,9 @@ public class ProfileService : IProfileService
     }
     public async Task<Profile> GetProfileByUserId(string userId)
     {
-        return await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(x=>x.UserId == userId);
+        return await _context.Profiles
+                    .Include(x=>x.Picture)
+                    .FirstOrDefaultAsync(x=>x.UserId == userId);
     }
 
     public async Task<Profile> CreateProfile(Profile profile)

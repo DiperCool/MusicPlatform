@@ -37,15 +37,6 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "type": "npm",
-            "script": "build",
-            "path": "src/Web.WebUI/ClientApp/",
-            "group": "build",
-            "problemMatcher": [],
-            "label": "npm: build - src/Web.WebUI/ClientApp",
-            "detail": "react-scripts build"
         }
     ]
 }

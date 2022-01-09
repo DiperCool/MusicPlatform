@@ -115,7 +115,11 @@ public class RegisterModel : PageModel
             var result = await _userManager.CreateAsync(user, Input.Password);
             if (result.Succeeded)
             {
-                Profile profile = new Profile(){UserId = user.Id, Login= Input.Login, LastName= Input.LastName, FirstName=Input.FirstName};
+                PathToFile pathToFile = new(){
+                    ShortPath="/",
+                    FullPath="/"
+                };
+                Profile profile = new Profile(){UserId = user.Id, Login= Input.Login, LastName= Input.LastName, FirstName=Input.FirstName, Picture= pathToFile};
                 if(Input.TypeAccount=="Artist")
                 {
                     Artist acc= (Artist) await _accountService.CreateAccount(new Artist(){ UserId= user.Id });

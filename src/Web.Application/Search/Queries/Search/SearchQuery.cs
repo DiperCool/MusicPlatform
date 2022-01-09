@@ -25,13 +25,13 @@ public class SearchQueryHandler : IRequestHandler<SearchQuery, PaginatedList<Sea
     }
     public async Task<PaginatedList<SearchDTO>> Handle(SearchQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<SearchDTO> query = _context.Artists.Select(x=> new SearchDTO(){ Id = x.Id, Title = x.Profile.Login, Type= TypeItemSearch.Artist,Picture="/"})
-                    .Concat(_context.Listeners.Select(x=> new SearchDTO(){ Id = x.Id, Title = x.Profile.Login, Type= TypeItemSearch.Listener,Picture="/"}))
+        IQueryable<SearchDTO> query = _context.Artists.Select(x=> new SearchDTO(){ Id = x.Id, Title = x.Profile.Login, Type= TypeItemSearch.Artist,Picture=x.Profile.Picture.ShortPath})
+                    .Concat(_context.Listeners.Select(x=> new SearchDTO(){ Id = x.Id, Title = x.Profile.Login, Type= TypeItemSearch.Listener,Picture=x.Profile.Picture.ShortPath}))
                     .Concat(_context.Songs.Select(x=>new SearchDTO(){ Id=x.Id, Title= x.Title, Type= TypeItemSearch.Song, Picture = x.Album.Picture.ShortPath}))
                     .Concat(_context.Albums.Select(x=> new SearchDTO(){Id=x.Id, Title= x.Title, Type= TypeItemSearch.Album, Picture = x.Picture.ShortPath}));        
         return await query
                 .Where(x=>x.Title.ToLower().Contains(request.Title))
-                .OrderBy(x=>x.Title)
+                .OrderBy(x=>x.Id)
                 .PaginatedListAsync<SearchDTO>(request.Id, request.PageSize);
 
                 
