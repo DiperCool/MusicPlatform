@@ -21,6 +21,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using Duende.IdentityServer.Services;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Web.WebUI;
 public class Startup
@@ -101,9 +102,13 @@ public class Startup
             app.UseExceptionHandler("/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
+            app.UseHttpsRedirection();
         }
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
-        app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseSpaStaticFiles();
 
