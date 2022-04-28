@@ -27,7 +27,7 @@ public static class DependencyInjection
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddIdentityServer()
-            .AddSigningCredential(new X509Certificate2(@"server.pfx", "09210921"))
+            .AddSigningCredential(new X509Certificate2("/home/ubuntu/cert/server.pfx", "09210921"))
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
         services.AddAuthentication()
             .AddIdentityServerJwt();
