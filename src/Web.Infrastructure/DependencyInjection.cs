@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,7 @@ public static class DependencyInjection
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddIdentityServer()
+            .AddSigningCredential(new X509Certificate2(@"server.pfx", "09210921"))
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
         services.AddAuthentication()
             .AddIdentityServerJwt();
