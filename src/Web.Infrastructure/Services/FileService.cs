@@ -29,7 +29,7 @@ public class FileService : IFileService
     {
         string guid = Guid.NewGuid().ToString();
         string extensionsFile = Path.GetExtension(model.nameFile);
-        string shortPath = Path.Combine("Files", guid+extensionsFile);
+        string shortPath = Path.Combine(Path.Combine("api","Files"), guid+extensionsFile);
         string fullPath = Path.Combine(GetWebRootPath(), shortPath);
         File.WriteAllBytes(fullPath,model.bytes);
         return new PathToFile {
