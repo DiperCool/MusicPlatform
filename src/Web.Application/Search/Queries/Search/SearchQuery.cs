@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CleanArchitecture.Application.Common.Models;
 using MediatR;
 using Web.Application.Common.DTOs;
 using Web.Application.Common.Enums;
@@ -11,7 +12,7 @@ using Web.Application.Common.Models;
 namespace Web.Application.Search.Queries.Search;
 public class SearchQuery:IRequest<PaginatedList<SearchDTO>>
 {
-    public int Id { get; set; }
+    public int PageNumber { get; set; }
     public string Title { get; set; }
     public int PageSize { get; set; } = 10;
 }
@@ -32,7 +33,7 @@ public class SearchQueryHandler : IRequestHandler<SearchQuery, PaginatedList<Sea
         return await query
                 .Where(x=>x.Title.ToLower().Contains(request.Title))
                 .OrderBy(x=>x.Id)
-                .PaginatedListAsync<SearchDTO>(request.Id, request.PageSize);
+                .PaginatedListAsync<SearchDTO>(request.PageNumber, request.PageSize);
 
                 
 

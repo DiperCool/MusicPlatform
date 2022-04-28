@@ -25,15 +25,11 @@ public static class DependencyInjection
         services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
-        
         services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
-            {
-                options.Clients.First().AccessTokenLifetime = (int)TimeSpan.FromDays(7).TotalSeconds;
-            });
-
+            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
         services.AddAuthentication()
             .AddIdentityServerJwt();
+        services.AddAuthorization();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IProfileService, ProfileService>();

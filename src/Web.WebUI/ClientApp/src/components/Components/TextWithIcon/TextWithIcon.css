@@ -1,0 +1,16 @@
+.text-with-icon-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.text-with-icon-wrapper> div{
+    margin-right: 20px;
+}
+.icon-default{
+    color: white;
+}
+
+.text-default{
+    color: white;
+    font-size: 20px;
+}

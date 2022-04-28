@@ -10,4 +10,5 @@ public class ArtistDTO : IMapFrom<Artist>
 {
     public int Id { get; set; }
     public ProfileDTO Profile { get; set; }
+    public int Subscribers { get; set; } 
 }

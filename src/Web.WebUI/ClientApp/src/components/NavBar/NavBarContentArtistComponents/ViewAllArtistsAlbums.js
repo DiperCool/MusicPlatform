@@ -8,13 +8,13 @@ export const ViewAllArtistsAlbums = ()=>{
     let [albums, setAlbums]= useState([]);
     let [pagination, setPagination]= useState({
         hasNextPage:false,
-        id:0,
+        pageNumber:1,
         pageSize:1
     });
     let {getUser, getAccessToken} = useContext(AuthorizationContext);
-    let loadAlbums = async(id=0, pageSize=1)=>{
+    let loadAlbums = async(pageNumber=1, pageSize=1)=>{
         let user = await getUser();
-        let response = await fetch(`api/album?artistId=${user.AccountId}&pageSize=${pageSize}&albumId=${id}`,{
+        let response = await fetch(`api/album?artistId=${user.AccountId}&pageSize=${pageSize}&pageNumber=${pageNumber}`,{
             method: "GET",
             headers:{
                 Authorization: "Bearer " + await getAccessToken()

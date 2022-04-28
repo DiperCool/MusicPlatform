@@ -16,5 +16,7 @@ public interface IApplicationDbContext
     DbSet<Song> Songs { get; set; }
     DbSet<Album> Albums { get; set; }
     DbSet<PathToFile> PathesToFiles { get; set; }
+    DbSet<Like> Likes { get; set; }
+     DbSet<Subscriber> Subscribers { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using CleanArchitecture.Application.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Web.Application.Common.DTOs;
@@ -16,7 +17,7 @@ namespace Web.Application.Songs.Queries.GetSongs;
 public class GetSongsQuery : IRequest<PaginatedList<SongDTO>>
 {
     public int AlbumId { get; set; }
-    public int SongId { get; set; } = 1;
+    public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
 }
 public class GetSongsQueryHandler : IRequestHandler<GetSongsQuery, PaginatedList<SongDTO>>
@@ -40,6 +41,6 @@ public class GetSongsQueryHandler : IRequestHandler<GetSongsQuery, PaginatedList
                     .Include(x=>x.Album)
                         .ThenInclude(x=>x.Artist)
                     .ProjectTo<SongDTO>(_mapper.ConfigurationProvider)
-                    .PaginatedListAsync(request.SongId, request.PageSize);
+                    .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

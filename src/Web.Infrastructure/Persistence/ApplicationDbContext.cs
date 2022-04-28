@@ -20,6 +20,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Song> Songs { get; set; }
     public DbSet<Album> Albums { get; set; }
     public DbSet<PathToFile> PathesToFiles { get; set; }
+    public DbSet<Like> Likes { get; set; }
+    public DbSet<Subscriber> Subscribers { get; set; }
+
     public ApplicationDbContext(
         DbContextOptions options,
         IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

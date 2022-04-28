@@ -13,5 +13,7 @@ public class GetAlbumsQueryValidator: AbstractValidator<GetAlbumsQuery>
             .NotEmpty();
         RuleFor(x=>x.PageSize)
             .GreaterThanOrEqualTo(1);
+        RuleFor(x=>x.PageNumber)
+            .GreaterThanOrEqualTo(1);
     }
 }

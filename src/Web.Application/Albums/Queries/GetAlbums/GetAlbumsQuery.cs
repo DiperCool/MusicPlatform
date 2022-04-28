@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using CleanArchitecture.Application.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Web.Application.Common.DTOs;
@@ -19,7 +20,7 @@ public class GetAlbumsQuery: IRequest<PaginatedList<AlbumDTO>>
 {
     public int ArtistId { get; set; }
     public int PageSize { get; set; } = 1;
-    public int AlbumId { get; set; } = 1;
+    public int PageNumber { get; set; } = 1;
 }
 public class GetAlbumsQueryHandler : IRequestHandler<GetAlbumsQuery, PaginatedList<AlbumDTO>>
 {
@@ -41,6 +42,6 @@ public class GetAlbumsQueryHandler : IRequestHandler<GetAlbumsQuery, PaginatedLi
                         .ThenInclude(x=>x.Profile)
                     .Include(x=>x.Picture)
                     .ProjectTo<AlbumDTO>(_mapper.ConfigurationProvider)
-                    .PaginatedListAsync(request.AlbumId, request.PageSize);
+                    .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 namespace Web.Domain.Entities;
 public class Listener:Account
 {
-    
+    public List<Song> LikedSongs { get; set; }
 }

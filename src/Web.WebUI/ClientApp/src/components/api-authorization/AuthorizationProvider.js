@@ -34,7 +34,7 @@ export const AuthorizationProvider = ({children})=>{
             if(!!userInit && !window.location.href.includes("authentication"))
             {
                 try {
-                    let response = await axios.post("https://localhost:5001/connect/userinfo",{
+                    let response = await axios.post("/connect/userinfo",{
                     
                     },{
                         headers:{

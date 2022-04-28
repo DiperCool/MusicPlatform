@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,9 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
-            
+                if (context.Database.GetPendingMigrations().Any()) {
+                    context.Database.Migrate();
+                }
 
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 

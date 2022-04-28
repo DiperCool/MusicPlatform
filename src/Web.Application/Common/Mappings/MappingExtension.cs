@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using CleanArchitecture.Application.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Web.Application.Common.Models;
 using Web.Domain.Interfaces;

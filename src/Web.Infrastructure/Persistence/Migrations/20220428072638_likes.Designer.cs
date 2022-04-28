@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Web.Infrastructure.Persistence;
@@ -11,9 +12,10 @@ using Web.Infrastructure.Persistence;
 namespace Web.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220428072638_likes")]
+    partial class likes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,32 +467,6 @@ namespace Web.Infrastructure.Migrations
                     b.ToTable("Songs");
                 });
 
-            modelBuilder.Entity("Web.Domain.Entities.Subscriber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ListenerId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("SubscribedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("ListenerId");
-
-                    b.ToTable("Subscribers");
-                });
-
             modelBuilder.Entity("Web.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -558,9 +534,6 @@ namespace Web.Infrastructure.Migrations
             modelBuilder.Entity("Web.Domain.Entities.Artist", b =>
                 {
                     b.HasBaseType("Web.Domain.Entities.Account");
-
-                    b.Property<int>("Subscribers")
-                        .HasColumnType("integer");
 
                     b.HasDiscriminator().HasValue("Artist");
                 });
@@ -695,23 +668,6 @@ namespace Web.Infrastructure.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("File");
-                });
-
-            modelBuilder.Entity("Web.Domain.Entities.Subscriber", b =>
-                {
-                    b.HasOne("Web.Domain.Entities.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Web.Domain.Entities.Listener", "Listener")
-                        .WithMany()
-                        .HasForeignKey("ListenerId");
-
-                    b.Navigation("Artist");
-
-                    b.Navigation("Listener");
                 });
 
             modelBuilder.Entity("Web.Domain.Entities.Account", b =>
